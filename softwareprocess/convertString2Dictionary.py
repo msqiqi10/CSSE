@@ -13,7 +13,7 @@ def convertString2Dictionary(inputString = ""):
     if not re.match("^[A-Za-z0-9=.,\s]*$", untestedString):
         return errorDict
     untestedStringList = untestedString.split(',')
-    #put pairs into dict and check blank, duplication, missing key or value, if key is start with alphabet
+    #do the rest checks and put pairs into an ordered lsit
     orderedList = []
     dic1 = {}
     for subString in untestedStringList:
