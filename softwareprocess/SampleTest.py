@@ -245,3 +245,6 @@ class SampleTest(unittest.TestCase):
 #         integration -> float
 # Happy path
 # Sad path
+    def test600_010_ShouldCalculateintegration(self):
+        mySample = SM.Sample(self.nominalN)
+        self.assertAlmostEquals(mySample.integrate(1.4, 20, self.f), 1.044, 4)

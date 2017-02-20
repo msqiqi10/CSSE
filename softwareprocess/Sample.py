@@ -65,28 +65,5 @@ class Sample(object):
         return result
     
     def integrate(self, t , n , f):
-        lowBound = 0
-        highBound = t
-        # Simpson integration part
-        epsilon = 0.001
-        simpsonOld = 0.0
-        simpsonNew = epsilon
-        s = 4
-        while abs((simpsonNew-simpsonOld)/simpsonNew) > epsilon:
-            simpsonOld = simpsonNew
-            w = (highBound - lowBound) / s
-            oddSum = 0
-            evenSum = 0
-            t1 =  2 * w
-            t2 = w
-            while t1 < highBound:
-                oddSum += 2 * f(t1, n)
-                t1 = t1 + 2 * w
-            while t2 < highBound:
-                evenSum += 4 * f(t2, n)
-                t2 = t2 + 2 * w
-            he = f(lowBound, n) + f(highBound, n) +  oddSum +  evenSum
-            simpsonNew = (w / 3) * (he)
-            s = s * 2
-        return simpsonNew
+        pass
 
