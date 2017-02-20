@@ -77,11 +77,20 @@ class Sample(object):
             w = (highBound - lowBound) / s
             oddSum = 0
             evenSum = 0
-            for i in range(lowBound+2, highBound-2, 2):
+            i = 0
+            # for i in range(lowBound+2, highBound-2, 2):
+            #     oddSum += f(i, n)
+            while i < highBound - 2 * w:
+                i = lowBound + 2 * w
                 oddSum += f(i, n)
-            for i in range(lowBound+1, highBound, 2):
+                i = i + 2 * w
+            # for i in range(lowBound+1, highBound, 2):
+            #     evenSum += f(i, n)
+            while i < highBound - w:
+                i = lowBound + w
                 evenSum += f(i, n)
-            he = f(lowBound, n) + f(highBound, n) + oddSum + evenSum
+                i = i + 2 * w
+            he = f(lowBound, n) + f(highBound, n) + 4 * oddSum + 2 * evenSum
             simpsonNew = (w / 3) * (he)
             s = s * 2
         return simpsonNew
