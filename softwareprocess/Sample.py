@@ -64,11 +64,25 @@ class Sample(object):
         result = base ** exponent
         return result
     
-    def integrate(self, lowBound, highBound, n, f):
-        pass
-        
-        
-    
-        
-            
-        
+    def integrate(self, t, n, f):
+        lowBound = 0
+        highBound = t
+        # Simpson integration part
+        epsilon = 0.001
+        simpsonOld = 0.0
+        simpsonNew = epsilon
+        s = 4
+        while abs((simpsonNew-simpsonOld)/simpsonNew) > epsilon:
+            simpsonOld = simpsonNew
+            w = (highBound - lowBound) / s
+            oddSum = 0
+            evenSum = 0
+            for i in range(lowBound+2, highBound-2, 2):
+                oddSum += f(i, n)
+            for i in range(lowBound+1, highBound, 2):
+                evenSum += f(i, n)
+            he = f(lowBound, n) + f(highBound, n) + oddSum + evenSum
+            simpsonNew = (w / 3) * (he)
+            s = s * 2
+        return simpsonNew
+
