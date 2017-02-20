@@ -65,33 +65,36 @@ class Sample(object):
         return result
     
     def integrate(self, t , n , f):
-        # lowBound = 0
-        # highBound = t
-        # # Simpson integration part
-        # epsilon = 0.001
-        # simpsonOld = 0.0
-        # simpsonNew = epsilon
-        # s = 4
-        # while abs((simpsonNew-simpsonOld)/simpsonNew) > epsilon:
-        #     simpsonOld = simpsonNew
-        #     w = (highBound - lowBound) / s
-        #     oddSum = 0
-        #     evenSum = 0
-        #     i = 0
-        #     # for i in range(lowBound+2, highBound-2, 2):
-        #     #     oddSum += f(i, n)
-        #     while i < highBound - 2 * w:
-        #         i = lowBound + 2 * w
-        #         oddSum += f(i, n)
-        #         i = i + 2 * w
-        #     # for i in range(lowBound+1, highBound, 2):
-        #     #     evenSum += f(i, n)
-        #     while i < highBound - w:
-        #         i = lowBound + w
-        #         evenSum += f(i, n)
-        #         i = i + 2 * w
-        #     he = f(lowBound, n) + f(highBound, n) + 2 * oddSum + 4 * evenSum
-        #     simpsonNew = (w / 3) * (he)
-        #     s = s * 2
-        # return simpsonNew
+        lowBound = 0
+        highBound = t
+        # Simpson integration part
+        epsilon = 0.001
+        simpsonOld = 0.0
+        simpsonNew = epsilon
+        s = 4
+        while abs((simpsonNew-simpsonOld)/simpsonNew) > epsilon:
+            simpsonOld = simpsonNew
+            w = (highBound - lowBound) / s
+            oddSum = 0
+            evenSum = 0
+            i = 0
+            t = 0
+            # for i in range(lowBound+2, highBound-2, 2):
+            #     oddSum += f(i, n)
+            while i < highBound - 2 * w:
+                t = lowBound + 2 * w
+                oddSum += f(t, n)
+                i = i + 2 * w
+                t = t + 2 * w
+            # for i in range(lowBound+1, highBound, 2):
+            #     evenSum += f(i, n)
+            while i < highBound - w:
+                t = lowBound + w
+                evenSum += f(t, n)
+                i = i + 2 * w
+                t = t + 2 * w
+            he = f(lowBound, n) + f(highBound, n) + 2 * oddSum + 4 * evenSum
+            simpsonNew = (w / 3) * (he)
+            s = s * 2
+        return simpsonNew
 

@@ -234,4 +234,14 @@ class SampleTest(unittest.TestCase):
     def test400_020_ShouldCalculateF(self):
         mySample = SM.Sample(self.nominalN)
         self.assertAlmostEquals(mySample.f(1, 5), 0.578703704)
-        
+
+# 500 integrate
+# analysis
+#     input all the inputs are pre-validated
+#         highbound -> t
+#         f -> function
+#         n -> sample size
+#     output
+#         integration -> float
+# Happy path
+# Sad path
