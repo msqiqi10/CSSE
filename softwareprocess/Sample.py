@@ -80,11 +80,11 @@ class Sample(object):
             i = 0
             t1 = lowBound + 2 * w
             t2 = lowBound + w
-            while i < highBound - 2 * w:
+            while i != highBound:
                 oddSum += f(t1, n)
                 i = i + 2 * w
                 t1 = t1 + 2 * w
-            while i < highBound - w:
+            while i != highBound + w:
                 evenSum += f(t2, n)
                 i = i + 2 * w
                 t2 = t + 2 * w
