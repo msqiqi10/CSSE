@@ -41,7 +41,7 @@ class Sample(object):
             raise ValueError(functionName + "result > 1.0")
         
         return result
-        
+
 # internal methods
     def gamma(self, x):
         if(x == 1):
@@ -71,24 +71,22 @@ class Sample(object):
         epsilon = 0.001
         simpsonOld = 0.0
         simpsonNew = epsilon
-        s = 4
+        s = 5
         while abs((simpsonNew-simpsonOld)/simpsonNew) > epsilon:
             simpsonOld = simpsonNew
             w = (highBound - lowBound) / s
             oddSum = 0
             evenSum = 0
             i = 0
-            t1 = lowBound + 2 * w
-            t2 = lowBound + w
-            while i != highBound:
-                oddSum += f(t1, n)
-                i = i + 2 * w
+            t1 =  2 * w
+            t2 = w
+            while t1 < highBound:
+                oddSum += 2 * f(t1, n)
                 t1 = t1 + 2 * w
-            while i != highBound + w:
-                evenSum += f(t2, n)
-                i = i + 2 * w
-                t2 = t + 2 * w
-            he = f(lowBound, n) + f(highBound, n) + 2 * oddSum + 4 * evenSum
+            while t2 < highBound:
+                evenSum += 4 * f(t2, n)
+                t2 = t2 + 2 * w
+            he = f(lowBound, n) + f(highBound, n) +  oddSum +  evenSum
             simpsonNew = (w / 3) * (he)
             s = s * 2
         return simpsonNew
