@@ -88,7 +88,7 @@ class Sample(object):
                 evenSum += f(t2, n)
                 i = i + 2 * w
                 t2 = t + 2 * w
-            he = f(lowBound, n) + f(highBound, n) + 2 * oddSum + 4 * evenSum
+            he = f(lowBound, n) + f(highBound, n) + 4 * oddSum + 2 * evenSum
             simpsonNew = (w / 3) * (he)
             s = s * 2
         return simpsonNew
