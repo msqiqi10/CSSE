@@ -3,11 +3,16 @@ def dispatch(values=None):
     #Validate parm
     if(values == None):
         return {'error': 'parameter is missing'}
-    if(not(isinstance(values,dict))):
+    if not(isinstance(values,dict)):
         return {'error': 'parameter is not a dictionary'}
     if (not('op' in values)):
         values['error'] = 'no op  is specified'
         return values
+
+    #Validate parm in dic
+    for key in values:
+        if not (key == 'observation'):
+            return {'error': 'missing observation'}
 
     #Perform designated function
     if(values['op'] == 'adjust'):

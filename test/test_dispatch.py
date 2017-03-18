@@ -1,5 +1,5 @@
 from unittest import TestCase
-from softwareprocess import dispatch
+from softwareprocess.dispatch import dispatch
 
 
 class TestDispatch(TestCase):
@@ -16,7 +16,7 @@ class TestDispatch(TestCase):
     # Optional, defaults to "natural" if missing.
 
     def test_dispatch100_001_observationMissing(self):
-        inputVal = {'op', 'adjust'}
+        inputVal = {'op': 'adjust'}
         returnedValue = dispatch(inputVal)
-        key, value = returnedValue.items()[0]
-        self.assertTrue(key == 'error' and value == 'missing observation')
+        print(returnedValue)
+        self.assertTrue(returnedValue == {'error': 'missing observation'})
