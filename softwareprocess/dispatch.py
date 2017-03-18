@@ -1,3 +1,4 @@
+import re
 def dispatch(values=None):
 
     #Validate parm
@@ -9,10 +10,16 @@ def dispatch(values=None):
         values['error'] = 'no op  is specified'
         return values
 
-    # #Validate parm in dic
-    # for key in values:
-    #     if not (key == 'observation'):
-    #         return {'error': 'missing observation'}
+    #Validate parm in dic
+    for key in values:
+        if not (key == 'observation'):
+            return {'error': 'missing observation'}
+
+    value = values['observation']
+    value = value.split('d')
+    if not re.match("^[A-Za-z0-9=.,\s]*$",value):
+        return {'error': 'value of observation is not '}
+
 
     #Perform designated function
     if(values['op'] == 'adjust'):

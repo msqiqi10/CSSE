@@ -21,4 +21,8 @@ class TestDispatch(TestCase):
         print(returnedValue)
         self.assertTrue(returnedValue == {'error': 'missing observation'})
 
+    def test_dispatch100_002_observationValueError(self):
+        inputVal = {'op': 'adjust', 'observation': '015d04.9'}
+
+
 
