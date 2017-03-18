@@ -9,10 +9,10 @@ def dispatch(values=None):
         values['error'] = 'no op  is specified'
         return values
 
-    #Validate parm in dic
-    for key in values:
-        if not (key == 'observation'):
-            return {'error': 'missing observation'}
+    # #Validate parm in dic
+    # for key in values:
+    #     if not (key == 'observation'):
+    #         return {'error': 'missing observation'}
 
     #Perform designated function
     if(values['op'] == 'adjust'):
