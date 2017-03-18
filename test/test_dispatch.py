@@ -20,3 +20,5 @@ class TestDispatch(TestCase):
         returnedValue = dispatch(inputVal)
         print(returnedValue)
         self.assertTrue(returnedValue == {'error': 'missing observation'})
+
+
