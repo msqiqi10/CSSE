@@ -17,7 +17,7 @@ def dispatch(values=None):
 
     value = values['observation']
     value = value.split('d')
-    if not re.match("^[A-Za-z0-9=.,\s]*$",value):
+    if not re.match("^[A-Za-z0-9=.,\s]*$", value):
         return {'error': 'value of observation is not '}
 
 
