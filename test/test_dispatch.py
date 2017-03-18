@@ -19,4 +19,5 @@ class TestDispatch(TestCase):
         inputVal = {'op': 'adjust'}
         returnedValue = dispatch(inputVal)
         print(returnedValue)
+
         self.assertTrue(returnedValue == {'error': 'missing observation'})
