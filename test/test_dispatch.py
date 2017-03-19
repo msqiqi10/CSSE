@@ -18,11 +18,57 @@ class TestDispatch(TestCase):
     def test_dispatch100_001_observationMissing(self):
         inputVal = {'op': 'adjust'}
         returnedValue = dispatch(inputVal)
-        print(returnedValue)
         self.assertTrue(returnedValue == {'error': 'missing observation'})
 
-    def test_dispatch100_002_observationValueError(self):
-        inputVal = {'op': 'adjust', 'observation': '015d04.9'}
+    def test_dispatch100_002_observationValueIllegal(self):
+        inputVal = {'op': 'adjust', 'observation': '123321'}
+        returnedValue = dispatch(inputVal)
+        self.assertTrue(returnedValue == {'error': 'value of observation is illegal'})
+
+    def test_dispatch100_003_observationValueIllegal(self):
+        inputVal = {'op': 'adjust', 'observation': '180d123.4'}
+        returnedValue = dispatch(inputVal)
+        self.assertTrue(returnedValue == {'error': 'degree of observation value is illegal'})
+
+    def test_dispatch100_004_observationValueIllegal(self):
+        inputVal = {'op': 'adjust', 'observation': '45d123.4'}
+        returnedValue = dispatch(inputVal)
+        self.assertTrue(returnedValue == {'error': 'minute of observation value is illegal'})
+
+    def test_dispatch100_005_observationValueIllegal(self):
+        inputVal = {'op': 'adjust', 'observation': '45d123.4'}
+        returnedValue = dispatch(inputVal)
+        self.assertTrue(returnedValue == {'error': 'minute of observation value is illegal'})
+
+    def test_dispatch100_006_heightValueIllegal(self):
+        inputVal = {'op': 'adjust', 'observation': '45d23.4', 'height': '-9'}
+        returnedValue = dispatch(inputVal)
+        self.assertTrue(returnedValue == {'error': 'value of height is illegal'})
 
 
+    def test_dispatch100_007_tempValueIllegal(self):
+        inputVal = {'op': 'adjust', 'observation': '45d23.4', 'height': '4', 'temperature': '140'}
+        returnedValue = dispatch(inputVal)
+        self.assertTrue(returnedValue == {'error': 'value of temperature is illegal'})
 
+    def test_dispatch100_008_tempValueIllegal(self):
+        inputVal = {'op': 'adjust', 'observation': '45d23.4', 'height': '4', 'temperature': '-70'}
+        returnedValue = dispatch(inputVal)
+        print (returnedValue)
+        self.assertTrue(returnedValue == {'error': 'value of temperature is illegal'})
+
+    def test_dispatch100_009_horizonValueIllegal(self):
+        inputVal = {'op': 'adjust', 'observation': '45d23.4', 'height': '7', 'temperature': '70', 'horizon': 'not artificial'}
+        returnedValue = dispatch(inputVal)
+        self.assertTrue(returnedValue == {'error': 'value of horizon is illegal'})
+
+    def test_dispatch100_010_happyPathTest(self):
+        inputVal = {'op': 'adjust', 'observation': '45d23.4', 'height': '7', 'temperature': '70','horizon': 'artificial'}
+        returnedValue = dispatch(inputVal)
+        print
+        self.assertTrue(returnedValue ==inputVal )
+
+    # -----------------------------------------------------------------------
+    # ---- op: adjust Tests
+    # 200 constructor:
+    # calculate the altitude value to be returned
