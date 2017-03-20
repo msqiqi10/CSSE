@@ -9,8 +9,6 @@ def dispatch(values=None):
         return {'error': 'parameter is not a dictionary'}
     if not'op' in values:
         return {'error': 'no op specified'}
-    if values['op'] != 'adjust' and values['op'] != 'predict' and values['op'] != 'correct' and values['op'] != 'locate':
-        return {'error': 'op is not a legal operator'}
 
     keys = ['altitude']
     for key in values:
@@ -71,11 +69,9 @@ def dispatch(values=None):
             dip = (-.97 * math.sqrt(float(values['height']))) / 60
         else:
             dip = 0
-        refraction = -.00452 * float(values['pressure'])
+        refraction = (-.00452 * float(values['pressure'])) / 60
         degree = degree + minute / 60
-        print(degree)
         degree = float("{:.1f}".format(degree + dip + refraction))
-        print(degree)
         minute = str((degree - int(degree)) * 60)
         minute = minute.split('.')
         var1 = minute[0].zfill(2)
@@ -94,5 +90,4 @@ def dispatch(values=None):
     elif(values['op'] == 'locate'):
         return values    #This calculation is stubbed out
     else:
-        values['error'] = 'op is not a legal operation'
-        return values
+        return {'error':  'op is not a legal operation'}
