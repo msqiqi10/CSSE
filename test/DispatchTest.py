@@ -15,6 +15,11 @@ class TestDispatch(TestCase):
     # Horizon is one of the following case-insensitive strings:  "artificial" or "natural".
     # Optional, defaults to "natural" if missing.
 
+    def test_dispatch100_000_emptyInput(self):
+        inputVal = {}
+        returnedValue = dispatch(inputVal)
+        self.assertTrue(returnedValue == {'error': 'no op is specified'})
+
     def test_dispatch100_001_observationMissing(self):
         inputVal = {'op': 'adjust'}
         returnedValue = dispatch(inputVal)
@@ -23,46 +28,76 @@ class TestDispatch(TestCase):
     def test_dispatch100_002_observationValueIllegal(self):
         inputVal = {'op': 'adjust', 'observation': '123321'}
         returnedValue = dispatch(inputVal)
-        self.assertTrue(returnedValue == {'error': 'value of observation is illegal'})
+        inputVal['error'] = 'value of observation is illegal'
+        self.assertTrue(returnedValue == inputVal)
 
     def test_dispatch100_003_observationValueIllegal(self):
         inputVal = {'op': 'adjust', 'observation': '180d123.4'}
         returnedValue = dispatch(inputVal)
-        self.assertTrue(returnedValue == {'error': 'degree of observation value is illegal'})
+        inputVal['error'] = 'degree of observation value is illegal'
+        self.assertTrue(returnedValue == inputVal)
 
     def test_dispatch100_004_observationValueIllegal(self):
         inputVal = {'op': 'adjust', 'observation': '45d123.4'}
         returnedValue = dispatch(inputVal)
-        self.assertTrue(returnedValue == {'error': 'minute of observation value is illegal'})
+        inputVal['error'] = 'minute of observation value is illegal'
+        self.assertTrue(returnedValue == inputVal)
 
     def test_dispatch100_005_observationValueIllegal(self):
         inputVal = {'op': 'adjust', 'observation': '45d123.4'}
         returnedValue = dispatch(inputVal)
-        self.assertTrue(returnedValue == {'error': 'minute of observation value is illegal'})
+        inputVal['error'] = 'minute of observation value is illegal'
+        self.assertTrue(returnedValue == inputVal)
 
     def test_dispatch100_006_heightValueIllegal(self):
         inputVal = {'op': 'adjust', 'observation': '45d23.4', 'height': '-9'}
         returnedValue = dispatch(inputVal)
-        self.assertTrue(returnedValue == {'error': 'value of height is illegal'})
-
+        inputVal['error'] = 'value of height is illegal'
+        self.assertTrue(returnedValue == inputVal)
 
     def test_dispatch100_007_tempValueIllegal(self):
         inputVal = {'op': 'adjust', 'observation': '45d23.4', 'height': '4', 'temperature': '140'}
         returnedValue = dispatch(inputVal)
-        self.assertTrue(returnedValue == {'error': 'value of temperature is illegal'})
+        inputVal['error'] = 'value of temperature is illegal'
+        self.assertTrue(returnedValue == inputVal)
 
     def test_dispatch100_008_tempValueIllegal(self):
         inputVal = {'op': 'adjust', 'observation': '45d23.4', 'height': '4', 'temperature': '-70'}
         returnedValue = dispatch(inputVal)
-        self.assertTrue(returnedValue == {'error': 'value of temperature is illegal'})
+        inputVal['error'] = 'value of temperature is illegal'
+        self.assertTrue(returnedValue == inputVal)
 
     def test_dispatch100_009_horizonValueIllegal(self):
         inputVal = {'op': 'adjust', 'observation': '45d23.4', 'height': '7', 'temperature': '70',
                     'horizon': 'not artificial'}
         returnedValue = dispatch(inputVal)
-        self.assertTrue(returnedValue == {'error': 'value of horizon is illegal'})
+        inputVal['error'] = 'value of horizon is illegal'
+        self.assertTrue(returnedValue == inputVal)
 
-    def test_dispatch100_010_happyPathTest(self):
+    def test_dispatch100_010_givenCase1(self):
+        inputVal = {'observation': '101d15.2', 'height': '6', 'pressure': '1010', 'horizon': 'natural', 'op': 'adjust', 'temperature': '71'}
+        returnedValue = dispatch(inputVal)
+        inputVal['error'] = 'degree of observation value is illegal'
+        self.assertTrue(returnedValue == inputVal)
+
+    def test_dispatch100_011_givenCase2(self):
+        inputVal = {'observation': '45d15.2', 'height': 'a', 'pressure': '1010', 'horizon': 'natural', 'op': 'adjust', 'temperature': '71'}
+        returnedValue = dispatch(inputVal)
+        inputVal['error'] = 'cast error'
+        self.assertTrue(returnedValue == inputVal)
+
+    def test_dispatch100_012_givenCase3(self):
+        inputVal = {'observation': '45d15.2', 'height': '6', 'horizon': '   ', 'pressure': '1010', 'op': 'adjust', 'temperature': '71'}
+        returnedValue = dispatch(inputVal)
+        inputVal['error'] = 'value of horizon is illegal'
+        self.assertTrue(returnedValue == inputVal)
+
+    def test_dispatch100_013_givenCase4(self):
+        inputVal = None
+        returnedValue = dispatch(inputVal)
+        self.assertTrue(returnedValue == {'error':'dictionary is missing'})
+
+    def test_dispatch100_014_happyPathTest(self):
         inputVal = {'op': 'adjust', 'observation': '45d23.4', 'height': '7', 'temperature': '70',
                     'horizon': 'artificial'}
         returnedValue = dispatch(inputVal)
@@ -76,27 +111,23 @@ class TestDispatch(TestCase):
     def test_calculateAdjsut200_001_happyPath(self):
         inputVal = {'observation': '30d1.5', 'height': '19.0', 'pressure': '1000', 'horizon': 'artificial', 'op': 'adjust', 'temperature': '85'}
         returnedDict = dispatch(inputVal)
-        print(returnedDict)
         desiredOutput = {'altitude':'29d59.9', 'observation': '30d1.5', 'height': '19.0', 'pressure': '1000', 'horizon': 'artificial', 'op': 'adjust', 'temperature': '85'}
         self.assertTrue(returnedDict == desiredOutput)
 
     def test_calculateAdjsut200_002_happyPath(self):
         inputVal = {'observation': '45d15.2', 'height': '6', 'pressure': '1010', 'horizon': 'natural', 'op': 'adjust', 'temperature': '71'}
         returnedDict = dispatch(inputVal)
-        print(returnedDict)
         desiredOutput = {'altitude':'45d11.9', 'observation': '45d15.2', 'height': '6', 'pressure': '1010', 'horizon': 'natural', 'op': 'adjust', 'temperature': '71'}
         self.assertTrue(returnedDict == desiredOutput)
 
     def test_calculateAdjsut200_003_happyPath(self):
         inputVal = {'observation': '42d0.0',  'op': 'adjust'}
         returnedDict = dispatch(inputVal)
-        print(returnedDict)
         desiredOutput = {'altitude':'41d59.0', 'observation': '42d0.0',  'op': 'adjust'}
         self.assertTrue(returnedDict == desiredOutput)
 
     def test_calculateAdjsut200_004_happyPath(self):
         inputVal = {'observation': '42d0.0',  'op': 'adjust', 'extraKey':'ignore'}
         returnedDict = dispatch(inputVal)
-        print(returnedDict)
         desiredOutput = {'altitude':'41d59.0', 'observation': '42d0.0',  'op': 'adjust', 'extraKey':'ignore'}
         self.assertTrue(returnedDict == desiredOutput)

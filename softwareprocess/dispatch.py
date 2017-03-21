@@ -4,11 +4,11 @@ def dispatch(values=None):
 
     # Validate parm
     if values == None:
-        return {'error': 'parameter is missing'}
+        return {'error':'dictionary is missing'}
     if not(isinstance(values,dict)):
         return {'error': 'parameter is not a dictionary'}
     if not'op' in values:
-        return {'error': 'no op specified'}
+        return {'error': 'no op is specified'}
 
     keys = ['altitude']
     for key in values:
@@ -34,25 +34,33 @@ def dispatch(values=None):
     # validate values
     value = values['observation']
     if not re.match("^\d*d\d*\.\d*$", value):
-        return {'error': 'value of observation is illegal'}
+        values['error'] = 'value of observation is illegal'
+        return values
     observationSet = value.split('d')
     degree = int(observationSet[0])
     minute = float(observationSet[1])
     if degree > 90 or degree < 0:
-        return {'error': 'degree of observation value is illegal'}
+        values['error'] = 'degree of observation value is illegal'
+        return values
     if minute > 60 or minute < 0:
-        return {'error': 'minute of observation value is illegal'}
+        values['error'] = 'degree of observation value is illegal'
+        return values
     try:
         if float(values['height']) < 0:
-            return {'error': 'value of height is illegal'}
+            values['error'] = 'value of height is illegal'
+            return values
         if int(values['temperature']) < -20 or int(values['temperature']) > 120:
-            return {'error': 'value of temperature is illegal'}
+            values['error'] = 'value of temperature is illegal'
+            return values
         if int(values['pressure']) < 100 or int(values['pressure']) > 1100:
-            return {'error': 'value of pressure is illegal'}
+            values['error'] = 'value of pressure is illegal'
+            return values
         if values['horizon'] != 'natural' and values['horizon'] != 'artificial':
-            return {'error': 'value of horizon is illegal'}
+            values['error'] = 'value of horizon is illegal'
+            return values
     except ValueError:
-        return {'error': 'cast error'}
+        values['error'] = 'cast error'
+        return values
 
 
 
@@ -72,7 +80,6 @@ def dispatch(values=None):
         degreeInRadians = math.radians(degree + minute / 60)
         refraction = ((-.00452 * float(values['pressure'])) / (273 + (int(values['temperature']) - 32) * 5/9)) / math.tan(degreeInRadians)
         degree = degree + minute / 60
-        print(degree + dip + refraction)
         degree = float(degree + dip + refraction)
         minute = str("{:.1f}".format((degree - int(degree)) * 60))
         minute = minute.split('.')
@@ -92,5 +99,5 @@ def dispatch(values=None):
     elif(values['op'] == 'locate'):
         return values    #This calculation is stubbed out
     else:
-        values['error'] = ''
-        return {'error':  'op is not a legal operation'}
+        values['error'] = 'op is not a legal operation'
+        return values
