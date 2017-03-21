@@ -74,8 +74,29 @@ class TestDispatch(TestCase):
     # calculate the altitude value to be returned
 
     def test_calculateAdjsut200_001_happyPath(self):
+        inputVal = {'observation': '30d1.5', 'height': '19.0', 'pressure': '1000', 'horizon': 'artificial', 'op': 'adjust', 'temperature': '85'}
+        returnedDict = dispatch(inputVal)
+        print(returnedDict)
+        desiredOutput = {'altitude':'29d59.9', 'observation': '30d1.5', 'height': '19.0', 'pressure': '1000', 'horizon': 'artificial', 'op': 'adjust', 'temperature': '85'}
+        self.assertTrue(returnedDict == desiredOutput)
+
+    def test_calculateAdjsut200_002_happyPath(self):
         inputVal = {'observation': '45d15.2', 'height': '6', 'pressure': '1010', 'horizon': 'natural', 'op': 'adjust', 'temperature': '71'}
         returnedDict = dispatch(inputVal)
         print(returnedDict)
-        desiredOutput = {'altitude':'45d11.9', 'observation': '30d1.5', 'height': '19.0', 'pressure': '1000', 'horizon': 'artificial', 'op': 'adjust', 'temperature': '85'}
+        desiredOutput = {'altitude':'45d11.9', 'observation': '45d15.2', 'height': '6', 'pressure': '1010', 'horizon': 'natural', 'op': 'adjust', 'temperature': '71'}
+        self.assertTrue(returnedDict == desiredOutput)
+
+    def test_calculateAdjsut200_003_happyPath(self):
+        inputVal = {'observation': '42d0.0',  'op': 'adjust'}
+        returnedDict = dispatch(inputVal)
+        print(returnedDict)
+        desiredOutput = {'altitude':'41d59.0', 'observation': '42d0.0',  'op': 'adjust'}
+        self.assertTrue(returnedDict == desiredOutput)
+
+    def test_calculateAdjsut200_004_happyPath(self):
+        inputVal = {'observation': '42d0.0',  'op': 'adjust', 'extraKey':'ignore'}
+        returnedDict = dispatch(inputVal)
+        print(returnedDict)
+        desiredOutput = {'altitude':'41d59.0', 'observation': '42d0.0',  'op': 'adjust', 'extraKey':'ignore'}
         self.assertTrue(returnedDict == desiredOutput)
