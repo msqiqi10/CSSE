@@ -107,6 +107,7 @@ class TestDispatch(TestCase):
     # ---- op: adjust Tests
     # 200 constructor:
     # calculate the altitude value to be returned
+    # always happy test
 
     def test_calculateAdjsut200_001_happyPath(self):
         inputVal = {'observation': '30d1.5', 'height': '19.0', 'pressure': '1000', 'horizon': 'artificial', 'op': 'adjust', 'temperature': '85'}
