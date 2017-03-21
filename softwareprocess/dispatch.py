@@ -69,14 +69,21 @@ def dispatch(values=None):
             dip = (-.97 * math.sqrt(float(values['height']))) / 60
         else:
             dip = 0
-        refraction = (-.00452 * float(values['pressure'])) / 60
+        print('dip='+ str(dip))
+        observation = degree + minute / 60
+        print(math.tan(observation))
+        refraction = ((-.00452 * float(values['pressure'])) / (273 + (int(values['temperature']) - 32) * 5/9)) / math.tan(int(observation) / 360)
+        print('refreaction=' + str(refraction))
         degree = degree + minute / 60
         degree = float("{:.1f}".format(degree + dip + refraction))
+        print('degree=' + str(int(degree)))
         minute = str((degree - int(degree)) * 60)
         minute = minute.split('.')
+        print(minute)
         var1 = minute[0].zfill(2)
         var2 = minute[1]
         minute = var1 + '.' + var2
+        print('minute=' + minute)
         altitude = str(int(degree)) + 'd' + minute
         values['altitude'] = altitude
         for key in values.keys():
