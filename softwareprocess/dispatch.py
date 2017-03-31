@@ -31,7 +31,7 @@ def dispatch(values=None):
 def calculatePredict(values):
     # checking important information
     key = 'body'
-    if key not in dict.keys(values):
+    if key not in values:
         values['error'] = 'mandatory information is missing'
         return values
     fileName = os.path.join(os.path.dirname(__file__),'stars.txt')
@@ -48,6 +48,7 @@ def calculatePredict(values):
         return values
 
     # setting default values
+    keys = ['lon']
     key = 'date'
     if key not in dict.keys(values):
         values[key] = '2001-01-01'
@@ -98,7 +99,6 @@ def calculateAltitude(values):
     keys = ['altitude']
     for key in values:
         keys.append(key)
-    # Set default values
     key = 'height'
     if key not in values:
         values['height'] = '0'
