@@ -150,5 +150,5 @@ class TestDispatch(TestCase):
     def test_calculatePredict300_002_missingBody(self):
         inputVal = {'op': 'predict'}
         returnedDict = dispatch(inputVal)
-        desiredOutput = {'error' : ''}
+        desiredOutput = {'error':'mandatory information is missing', 'op': 'predict'}
         self.assertTrue(returnedDict == desiredOutput)

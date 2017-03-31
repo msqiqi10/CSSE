@@ -23,7 +23,8 @@ def dispatch(values=None):
         values = calculateAltitude(values)
         return values
     elif(values['op'] == 'predict'):
-        return values    #This calculation is stubbed out
+        key = 'body'
+        return values
     elif(values['op'] == 'correct'):
         return values    #This calculation is stubbed out
     elif(values['op'] == 'locate'):
