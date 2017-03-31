@@ -1,5 +1,6 @@
 import re
 import math
+import os
 
 def dispatch(values=None):
 
@@ -32,7 +33,8 @@ def calculatePredict(values):
     if key not in values:
         values['error'] = 'mandatory information is missing'
         return values
-    stars = open("stars.txt")
+    fileName = os.path.join(os.path.dirname(__file__),'stars.txt')
+    stars = open(fileName)
     starsDict = {}
     for line in stars:
         eachLine = line
@@ -43,7 +45,7 @@ def calculatePredict(values):
     if value not in starsDict:
         values['error'] = 'star not in catalog'
         return values
-    
+
 
 def calculateAltitude(values):
     key = 'observation'
