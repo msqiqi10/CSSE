@@ -31,7 +31,7 @@ def dispatch(values=None):
 def calculatePredict(values):
     # checking important information
     key = 'body'
-    if key not in values:
+    if key not in dict.keys(values):
         values['error'] = 'mandatory information is missing'
         return values
     fileName = os.path.join(os.path.dirname(__file__),'stars.txt')
@@ -49,10 +49,10 @@ def calculatePredict(values):
 
     # setting default values
     key = 'date'
-    if key not in values:
+    if key not in dict.keys(values):
         values[key] = '2001-01-01'
     key = 'time'
-    if key not in values:
+    if key not in dict.keys(values):
         values[key] = '00:00:00'
 
     # validate date
