@@ -162,6 +162,6 @@ class TestDispatch(TestCase):
     def test_calculatePredict300_004_dateFormatIllegal(self):
         inputVal = {'op': 'predict', 'body' : 'Akamar', 'date' : 'randomString'}
         returnedDict = dispatch(inputVal)
-        desiredOutput = {'error':'date format is illegal', 'body' : 'Akamar', 'op' : 'predict'}
+        desiredOutput = {'error':'date format is illegal','date' : 'randomString', 'body' : 'Akamar', 'op' : 'predict'}
         print(returnedDict)
         self.assertTrue(returnedDict == desiredOutput)
