@@ -42,6 +42,7 @@ def calculatePredict(values):
     value = values['body']
     if value not in starsDict:
         values['error'] = 'star not in table'
+        return values
 
 
 def calculateAltitude(values):
