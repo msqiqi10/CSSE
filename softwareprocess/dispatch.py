@@ -47,15 +47,6 @@ def calculatePredict(values):
         values['error'] = 'star not in catalog'
         return values
 
-    # setting default values
-    keys = ['lon']
-    key = 'date'
-    if key not in dict.keys(values):
-        values[key] = '2001-01-01'
-    key = 'time'
-    if key not in dict.keys(values):
-        values[key] = '00:00:00'
-
     # validate date
     value = values['date']
     if not re.match("^\d\d\d\d-\d\d-\d\d$", value):
@@ -84,6 +75,22 @@ def calculatePredict(values):
         if date > 30:
             values['error'] = 'date value is illegal'
             return values
+
+    # setting default values
+    keys = ['long','lat']
+    for key in dict.keys(values):
+        keys.append(key)
+    key = 'date'
+    if key not in dict.keys(values):
+        values[key] = '2001-01-01'
+    key = 'time'
+    if key not in dict.keys(values):
+        values[key] = '00:00:00'
+
+
+    for key in values.keys():
+        if key not in keys:
+            del values[key]
     return values
 
 
