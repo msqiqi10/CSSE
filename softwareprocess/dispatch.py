@@ -87,6 +87,8 @@ def calculatePredict(values):
     if key not in dict.keys(values):
         values[key] = '00:00:00'
 
+    # calculation of long and lat
+
 
     for key in values.keys():
         if key not in keys:
