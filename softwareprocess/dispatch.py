@@ -32,6 +32,12 @@ def calculatePredict(values):
     if key not in values:
         values['error'] = 'mandatory information is missing'
         return values
+    stars = open("star.txt")
+    starsDict = {}
+    for line in stars:
+        eachLine = line.strip('\n')
+        eachLine = eachLine.split('\t')
+        starsDict[j[0]] = str(eachLine[1]) + ' ' + str(eachLine[2])
 
 def calculateAltitude(values):
     key = 'observation'
