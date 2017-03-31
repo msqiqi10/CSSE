@@ -1,15 +1,39 @@
 import re
 import math
+
 def dispatch(values=None):
 
-    # Validate parm
-    if values == None:
-        return {'error':'dictionary is missing'}
-    if not(isinstance(values,dict)):
+    #Validate parm
+    if(values == None):
+        return {'error': 'parameter is missing'}
+    if(not(isinstance(values,dict))):
         return {'error': 'parameter is not a dictionary'}
-    if not'op' in values:
-        return {'error': 'no op is specified'}
+    if (not('op' in values)):
+        values['error'] = 'no op is specified'
+        return values
 
+    #Perform designated function
+    if(values['op'] == 'adjust'):
+        key = 'observation'
+        if key not in values:
+            return {'error': 'mandatory information missing'}
+        for key in values:
+            if key == 'altitude':
+                return {'error': 'altitude has already been in parameter'}
+        values = calculateAltitude(values)
+        return values
+    elif(values['op'] == 'predict'):
+        return values    #This calculation is stubbed out
+    elif(values['op'] == 'correct'):
+        return values    #This calculation is stubbed out
+    elif(values['op'] == 'locate'):
+        return values    #This calculation is stubbed out
+    else:
+        values['error'] = 'op is not a legal operation'
+        return values
+
+def calculateAltitude(values):
+    # setting default values in Dict
     keys = ['altitude']
     for key in values:
         keys.append(key)
@@ -27,11 +51,7 @@ def dispatch(values=None):
     if key not in values:
         values['horizon'] = 'natural'
 
-    key = 'observation'
-    if key not in values:
-        return {'error': 'mandatory information missing'}
-
-    # validate values
+    # validate parameters
     value = values['observation']
     if not re.match("^\d*d\d*\.\d*$", value):
         values['error'] = 'value of observation is illegal'
@@ -62,42 +82,24 @@ def dispatch(values=None):
         values['error'] = 'cast error'
         return values
 
-
-
-
-    #Perform designated function
-    if(values['op'] == 'adjust'):
-        for key in values:
-            if key == 'altitude':
-                return {'error': 'altitude has already in parameter'}
-        valueOfObservation = values['observation'].split('d')
-        if valueOfObservation[0] == 0 and valueOfObservation[1] < 0.1:
-            values['error': 'value of observation is too small']
-        if values['horizon'] == 'natural':
-            dip = (-.97 * math.sqrt(float(values['height']))) / 60
-        else:
-            dip = 0
-        degreeInRadians = math.radians(degree + minute / 60)
-        refraction = ((-.00452 * float(values['pressure'])) / (273 + (int(values['temperature']) - 32) * 5/9)) / math.tan(degreeInRadians)
-        degree = degree + minute / 60
-        degree = float(degree + dip + refraction)
-        minute = str("{:.1f}".format((degree - int(degree)) * 60))
-        minute = minute.split('.')
-        var1 = minute[0].zfill(2)
-        var2 = minute[1]
-        minute = var1 + '.' + var2
-        altitude = str(int(degree)) + 'd' + minute
-        values['altitude'] = altitude
-        for key in values.keys():
-            if key not in keys:
-                del values[key]
-        return values
-    elif(values['op'] == 'predict'):
-        return values    #This calculation is stubbed out
-    elif(values['op'] == 'correct'):
-        return values    #This calculation is stubbed out
-    elif(values['op'] == 'locate'):
-        return values    #This calculation is stubbed out
+    # calculate altitude
+    if values['horizon'] == 'natural':
+        dip = (-.97 * math.sqrt(float(values['height']))) / 60
     else:
-        values['error'] = 'op is not a legal operation'
-        return values
+        dip = 0
+    degreeInRadians = math.radians(degree + minute / 60)
+    refraction = ((-.00452 * float(values['pressure'])) / (273 + (int(values['temperature']) - 32) * 5 / 9)) / math.tan(
+        degreeInRadians)
+    degree = degree + minute / 60
+    degree = float(degree + dip + refraction)
+    minute = str("{:.1f}".format((degree - int(degree)) * 60))
+    minute = minute.split('.')
+    var1 = minute[0].zfill(2)
+    var2 = minute[1]
+    minute = var1 + '.' + var2
+    altitude = str(int(degree)) + 'd' + minute
+    values['altitude'] = altitude
+    for key in values.keys():
+        if key not in keys:
+            del values[key]
+    return values

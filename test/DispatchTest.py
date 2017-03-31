@@ -95,7 +95,7 @@ class TestDispatch(TestCase):
     def test_dispatch100_013_givenCase4(self):
         inputVal = None
         returnedValue = dispatch(inputVal)
-        self.assertTrue(returnedValue == {'error':'dictionary is missing'})
+        self.assertTrue(returnedValue == {'error':'parameter is missing'})
 
     def test_dispatch100_014_happyPathTest(self):
         inputVal = {'op': 'adjust', 'observation': '45d23.4', 'height': '7', 'temperature': '70',
