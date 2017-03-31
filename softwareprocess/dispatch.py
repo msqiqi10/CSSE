@@ -55,8 +55,13 @@ def calculatePredict(values):
     if int(value[0]) < 2001 or int(value[1]) > 12:
         values['error'] = 'date value is illegal'
         return values
-
-
+    date = int(value[2])
+    month = int(value[1])
+    year = int(value[0])
+    if month == 2 and  year%4 == 0:
+        if date > 29:
+            values['error'] = 'date value is illegal'
+    if month in
 def calculateAltitude(values):
     key = 'observation'
     if key not in values:
