@@ -45,10 +45,14 @@ def calculatePredict(values):
     if value not in starsDict:
         values['error'] = 'star not in catalog'
         return values
+
+    # validate date
     value = values['date']
     if not re.match("^\d\d\d\d-\d\d-\d\d$", value):
         values['error'] = 'date format is illegal'
         return values
+    value = value.split('-')
+    if value[0] < 2001
 
 
 def calculateAltitude(values):
@@ -58,6 +62,7 @@ def calculateAltitude(values):
     for key in values:
         if key == 'altitude':
             return {'error': 'altitude has already been in parameter'}
+
     # setting default values in Dict
     keys = ['altitude']
     for key in values:
