@@ -42,8 +42,8 @@ def calculatePredict(values):
         eachLine = eachLine.split()
         starsDict[eachLine[0]] = str(eachLine[1]) + ' ' + str(eachLine[2])
     stars.close()
-    value = values['body']
-    if value not in starsDict:
+    starName = values['body']
+    if starName not in starsDict:
         values['error'] = 'star not in catalog'
         return values
 
@@ -88,7 +88,7 @@ def calculatePredict(values):
         values[key] = '00:00:00'
 
     # calculation of long and lat
-    latitude = 
+    latitude =
 
     for key in dict.keys(values):
         if key not in keys:
