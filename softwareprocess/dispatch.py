@@ -88,9 +88,9 @@ def calculatePredict(values):
         values[key] = '00:00:00'
 
     # calculation of long and lat
+    latitude = 
 
-
-    for key in values.keys():
+    for key in dict.keys(values):
         if key not in keys:
             del values[key]
     return values
@@ -98,15 +98,15 @@ def calculatePredict(values):
 
 def calculateAltitude(values):
     key = 'observation'
-    if key not in values:
+    if key not in dict.keys(values):
         return {'error': 'mandatory information missing'}
-    for key in values:
+    for key in dict.keys(values):
         if key == 'altitude':
             return {'error': 'altitude has already been in parameter'}
 
     # setting default values in Dict
     keys = ['altitude']
-    for key in values:
+    for key in dict.keys(values):
         keys.append(key)
     key = 'height'
     if key not in values:
@@ -169,7 +169,7 @@ def calculateAltitude(values):
     minute = var1 + '.' + var2
     altitude = str(int(degree)) + 'd' + minute
     values['altitude'] = altitude
-    for key in values.keys():
+    for key in dict.keys(values):
         if key not in keys:
             del values[key]
     return values
