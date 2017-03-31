@@ -88,13 +88,27 @@ def calculatePredict(values):
         values[key] = '00:00:00'
 
     # calculation of long and lat
-    latitude =
+    starParameters = starsDict[starName]
+    starParameters = starParameters.split()
+    latitude = starParameters[0]
+    SHA = starParameters[1]
+    timeParameters = {'date' : values['date'], 'time' : values['time']}
+    GHA = calculateGHA(timeParameters)
 
     for key in dict.keys(values):
         if key not in keys:
             del values[key]
     return values
 
+def calculateGHA(timeParameters):
+    originalGHA = '100d42.6'
+    originalGHA = degreeToFloat(originalGHA)
+    date = timeParameters['date']
+    date = date.split('-')
+    # year = date[0]
+    # month = date[]
+    # yearGap =
+    # return GHA
 
 def calculateAltitude(values):
     key = 'observation'
@@ -162,14 +176,31 @@ def calculateAltitude(values):
         degreeInRadians)
     degree = degree + minute / 60
     degree = float(degree + dip + refraction)
-    minute = str("{:.1f}".format((degree - int(degree)) * 60))
-    minute = minute.split('.')
-    var1 = minute[0].zfill(2)
-    var2 = minute[1]
-    minute = var1 + '.' + var2
-    altitude = str(int(degree)) + 'd' + minute
+    # minute = str("{:.1f}".format((degree - int(degree)) * 60))
+    # minute = minute.split('.')
+    # var1 = minute[0].zfill(2)
+    # var2 = minute[1]
+    # minute = var1 + '.' + var2
+    # altitude = str(int(degree)) + 'd' + minute
+    altitude = degreeToString(degree)
     values['altitude'] = altitude
     for key in dict.keys(values):
         if key not in keys:
             del values[key]
     return values
+
+def degreeToFloat(degree):
+    degree = degree.split('d')
+    minunte = degree[1]
+    degree = degree[0]
+    degree = int(degree) + float(minunte) / 60
+    return degree
+
+def degreeToString(degree):
+    minute = str("{:.1f}".format((degree - int(degree)) * 60))
+    minute = minute.split('.')
+    var1 = minute[0].zfill(2)
+    var2 = minute[1]
+    minute = var1 + '.' + var2
+    degree = str(int(degree)) + 'd' + minute
+    return degree
