@@ -52,7 +52,7 @@ def calculatePredict(values):
         values['error'] = 'date format is illegal'
         return values
     value = value.split('-')
-    if value[0] < 2001 or value[1] > 12:
+    if int(value[0]) < 2001 or int(value[1]) > 12:
         values['error'] = 'date value is illegal'
         return values
 
