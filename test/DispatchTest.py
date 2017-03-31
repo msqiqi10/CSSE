@@ -180,20 +180,25 @@ class TestDispatch(TestCase):
     def test_calculatePredict300_006_dateValueIllegal(self):
         inputVal = {'op': 'predict', 'body' : 'Akamar', 'date' : '2002-02-30'}
         returnedDict = dispatch(inputVal)
-        print(returnedDict)
         desiredOutput = {'error':'date value is illegal','date' : '2002-02-30', 'body' : 'Akamar', 'op' : 'predict'}
         self.assertTrue(returnedDict == desiredOutput)
 
     def test_calculatePredict300_007_dateValueIllegal(self):
         inputVal = {'op': 'predict', 'body' : 'Akamar', 'date' : '2004-02-30'}
         returnedDict = dispatch(inputVal)
-        print(returnedDict)
         desiredOutput = {'error':'date value is illegal','date' : '2004-02-30', 'body' : 'Akamar', 'op' : 'predict'}
         self.assertTrue(returnedDict == desiredOutput)
 
     def test_calculatePredict300_008_dateValueIllegal(self):
         inputVal = {'op': 'predict', 'body' : 'Akamar', 'date' : '2002-11-31'}
         returnedDict = dispatch(inputVal)
-        print(returnedDict)
         desiredOutput = {'error':'date value is illegal','date' : '2002-11-31', 'body' : 'Akamar', 'op' : 'predict'}
         self.assertTrue(returnedDict == desiredOutput)
+
+    def test_calculatePredict300_009_dateValueIllegal(self):
+        inputVal = {'op': 'predict', 'body' : 'Akamar', 'date' : '2002-02-15'}
+        returnedDict = dispatch(inputVal)
+        print(returnedDict)
+        desiredOutput = {'date' : '2002-02-15', 'body' : 'Akamar', 'op' : 'predict'}
+        self.assertTrue(returnedDict == desiredOutput)
+
