@@ -132,3 +132,23 @@ class TestDispatch(TestCase):
         returnedDict = dispatch(inputVal)
         desiredOutput = {'altitude':'41d59.0', 'observation': '42d0.0',  'op': 'adjust', 'extraKey':'ignore'}
         self.assertTrue(returnedDict == desiredOutput)
+
+    # -----------------------------------------------------------------------
+    # ---- Acceptance test
+    # 300 constructor:
+    # op is "predict", mandatory
+    # body is mandatory, and is a star's name, if the star's name isnt in the table, report an error
+    # date is a string in yyyy-mm-dd format, where yyyy is .GE. 2001.  Optional, defaults to "2001-01-01" if missing.
+    # time is a string in hh:mm:ss  format.   Optional, defaults to "00:00:00" if missing.
+
+    def test_calculatePredict300_001_missingOpPredict(self):
+        inputVal = {}
+        returnedDict = dispatch(inputVal)
+        desiredOutput = {'error' : 'no op is specified'}
+        self.assertTrue(returnedDict == desiredOutput)
+
+    def test_calculatePredict300_002_missingBody(self):
+        inputVal = {'op': 'predict'}
+        returnedDict = dispatch(inputVal)
+        desiredOutput = {'error' : ''}
+        self.assertTrue(returnedDict == desiredOutput)
