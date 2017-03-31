@@ -46,9 +46,9 @@ def calculatePredict(values):
         values['error'] = 'star not in catalog'
         return values
     value = values['date']
-    if not re.match("^\d*d\d*\.\d*$", value):
-        values['error'] = 'value of observation is illegal'
-        return values
+    # if not re.match("^\d\d\d\d-\d\d-\d\d$", value):
+    #     values['error'] = 'date format is illegal'
+    #     return values
 
 
 def calculateAltitude(values):

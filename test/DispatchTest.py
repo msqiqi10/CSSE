@@ -158,3 +158,9 @@ class TestDispatch(TestCase):
         returnedDict = dispatch(inputVal)
         desiredOutput = {'error':'star not in catalog', 'body' : 'lalala', 'op' : 'predict'}
         self.assertTrue(returnedDict == desiredOutput)
+
+    def test_calculatePredict300_004_dateFormatIllegal(self):
+        inputVal = {'op': 'predict', 'body' : 'Akamar', 'date' : 'randomString'}
+        returnedDict = dispatch(inputVal)
+        desiredOutput = {'error':'date format is illegal', 'body' : 'Akamar', 'op' : 'predict'}
+        self.assertTrue(returnedDict == desiredOutput)
