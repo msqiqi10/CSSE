@@ -29,6 +29,7 @@ def dispatch(values=None):
         return values
 
 def calculatePredict(values):
+    # checking important information
     key = 'body'
     if key not in values:
         values['error'] = 'mandatory information is missing'
@@ -45,6 +46,14 @@ def calculatePredict(values):
     if value not in starsDict:
         values['error'] = 'star not in catalog'
         return values
+
+    # setting default values
+    key = 'date'
+    if key not in values:
+        values[key] = '2001-01-01'
+    key = 'time'
+    if key not in values:
+        values[key] = '00:00:00'
 
     # validate date
     value = values['date']
@@ -74,6 +83,9 @@ def calculatePredict(values):
         if date > 30:
             values['error'] = 'date value is illegal'
             return values
+    return values
+
+
 def calculateAltitude(values):
     key = 'observation'
     if key not in values:
