@@ -156,5 +156,5 @@ class TestDispatch(TestCase):
     def test_calculatePredict300_003_bodyNotInTable(self):
         inputVal = {'op': 'predict', 'body' : 'lalala'}
         returnedDict = dispatch(inputVal)
-        desiredOutput = {'error':'body not in table', 'body' : 'lalala', 'op' : 'predict'}
+        desiredOutput = {'error':'star not in table', 'body' : 'lalala', 'op' : 'predict'}
         self.assertTrue(returnedDict == desiredOutput)

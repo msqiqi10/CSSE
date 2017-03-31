@@ -38,7 +38,9 @@ def calculatePredict(values):
         eachLine = line.strip('\n')
         eachLine = eachLine.split('\t')
         starsDict[j[0]] = str(eachLine[1]) + ' ' + str(eachLine[2])
-
+    value = values['body']
+    if value not in starsDict:
+        values['error'] = 'star not in table'
 def calculateAltitude(values):
     key = 'observation'
     if key not in values:
