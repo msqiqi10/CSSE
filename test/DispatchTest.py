@@ -168,13 +168,17 @@ class TestDispatch(TestCase):
     def test_calculatePredict300_005_dateValueIllegal(self):
         inputVal = {'op': 'predict', 'body' : 'Akamar', 'date' : '1992-12-12'}
         returnedDict = dispatch(inputVal)
-        print(returnedDict)
         desiredOutput = {'error':'date value is illegal','date' : '1992-12-12', 'body' : 'Akamar', 'op' : 'predict'}
         self.assertTrue(returnedDict == desiredOutput)
 
     def test_calculatePredict300_006_dateValueIllegal(self):
         inputVal = {'op': 'predict', 'body' : 'Akamar', 'date' : '2002-99-12'}
         returnedDict = dispatch(inputVal)
-        print(returnedDict)
+        desiredOutput = {'error':'date value is illegal','date' : '2002-99-12', 'body' : 'Akamar', 'op' : 'predict'}
+        self.assertTrue(returnedDict == desiredOutput)
+
+    def test_calculatePredict300_006_dateValueIllegal(self):
+        inputVal = {'op': 'predict', 'body' : 'Akamar', 'date' : '2002-02-12'}
+        returnedDict = dispatch(inputVal)
         desiredOutput = {'error':'date value is illegal','date' : '2002-99-12', 'body' : 'Akamar', 'op' : 'predict'}
         self.assertTrue(returnedDict == desiredOutput)
