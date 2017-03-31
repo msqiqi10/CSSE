@@ -41,9 +41,9 @@ def calculatePredict(values):
     stars.close()
     value = values['body']
     if value not in starsDict:
-        values['error'] = 'star not in table'
+        values['error'] = 'star not in catalog'
         return values
-
+    
 
 def calculateAltitude(values):
     key = 'observation'
