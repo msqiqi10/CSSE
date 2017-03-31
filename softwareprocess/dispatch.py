@@ -14,16 +14,10 @@ def dispatch(values=None):
 
     #Perform designated function
     if(values['op'] == 'adjust'):
-        key = 'observation'
-        if key not in values:
-            return {'error': 'mandatory information missing'}
-        for key in values:
-            if key == 'altitude':
-                return {'error': 'altitude has already been in parameter'}
         values = calculateAltitude(values)
         return values
     elif(values['op'] == 'predict'):
-        key = 'body'
+        values = calculatePredict(values)
         return values
     elif(values['op'] == 'correct'):
         return values    #This calculation is stubbed out
@@ -33,7 +27,19 @@ def dispatch(values=None):
         values['error'] = 'op is not a legal operation'
         return values
 
+def calculatePredict(values):
+    key = 'body'
+    if key not in values:
+        values['error'] = 'mandatory information is missing'
+        return values
+
 def calculateAltitude(values):
+    key = 'observation'
+    if key not in values:
+        return {'error': 'mandatory information missing'}
+    for key in values:
+        if key == 'altitude':
+            return {'error': 'altitude has already been in parameter'}
     # setting default values in Dict
     keys = ['altitude']
     for key in values:
