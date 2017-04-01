@@ -20,7 +20,11 @@ def calculatePredict(values):
     key = 'time'
     if key not in dict.keys(values):
         values[key] = '00:00:00'
-
+    else:
+        flag = dateTest(values['time'])
+        if flag == False:
+            values['error'] = 'time value is illegal'
+            return values
 
     # calculation of long and lat
     fileName = os.path.join(os.path.dirname(__file__), 'stars.txt')
@@ -59,12 +63,12 @@ def parameterCheck(values):
         values['error'] = 'mandatory information is missing'
         return values
 
+def timeTest(values):
     # validate time
     time = values['time']
     time = time.split(':')
     if (int(time[0]) > 24 or int(time[0]) < 0) or (int(time[1]) > 60 or int(time[1]) < 0) or (int(time[2]) > 60 or int(time[2]) <0):
-        values['error'] = 'time value is illegal'
-        return values
+        return False
 
 
 def dateTest(value):
