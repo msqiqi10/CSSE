@@ -197,12 +197,12 @@ class TestDispatch(TestCase):
         desiredOutput = {'error':'date value is illegal','date' : '2002-11-31', 'body' : 'Akamar', 'op' : 'predict'}
         self.assertTrue(returnedDict == desiredOutput)
 
-    def test_calculatePredict300_009_dateHappyPath(self):
-        inputVal = {'op': 'predict', 'body' : 'Akamar', 'date' : '2002-02-15'}
-        returnedDict = dispatch(inputVal)
-        print(returnedDict)
-        desiredOutput = {'date' : '2002-02-15', 'body' : 'Akamar', 'op' : 'predict'}
-        self.assertTrue(returnedDict == desiredOutput)
+    # def test_calculatePredict300_009_dateHappyPath(self):
+    #     inputVal = {'op': 'predict', 'body' : 'Akamar', 'date' : '2002-02-15'}
+    #     returnedDict = dispatch(inputVal)
+    #     print(returnedDict)
+    #     desiredOutput = {'date' : '2002-02-15', 'body' : 'Akamar', 'op' : 'predict'}
+    #     self.assertTrue(returnedDict == desiredOutput)
 
     # -----------------------------------------------------------------------
     # ---- Earth GHA calculation test
@@ -218,11 +218,17 @@ class TestDispatch(TestCase):
     # -----------------------------------------------------------------------
     # ---- Adjust calculation test
     # 500 constructor:
-    # always happy path
+    # Given cases
 
     def test_calculatePredict500_001_dateHappyPath(self):
         inputVal = {'op' : 'adjust', 'body' : 'Betelgeuse', 'time' : '03:15:42','date' : '2016-01-17'}
         returnedDict = calculatePredict(inputVal)
         desiredOutput = {'body': 'Betelgeuse', 'long': '75d53.7', 'lat': '7d24.3', 'time':
             '03:15:42', 'date': '2016-01-17', 'op': 'adjust'}
+        self.assertTrue(returnedDict == desiredOutput)
+
+    def test_calculatePredict500_002_dateHappyPath(self):
+        inputVal = {}
+        returnedDict = calculatePredict(inputVal)
+        desiredOutput = {}
         self.assertTrue(returnedDict == desiredOutput)
