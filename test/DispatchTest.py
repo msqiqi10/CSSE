@@ -211,6 +211,17 @@ class TestDispatch(TestCase):
     def test_calculatePredict400_001_dateHappyPath(self):
         inputVal = {'time' : '03:15:42','date' : '2016-01-17'}
         returnedDict = calculateEarthGHA(inputVal)
-        print (returnedDict)
-        desiredOutput = '164d54.4'
+        print(returnedDict)
+        desiredOutput = '164d54.6'
+        self.assertTrue(returnedDict == desiredOutput)
+
+    # -----------------------------------------------------------------------
+    # ---- Adjust calculation test
+    # 500 constructor:
+    # always happy path
+
+    def test_calculatePredict500_001_dateHappyPath(self):
+        inputVal = {'op' : 'adjust', 'body' : 'Betelgeuse', 'time' : '03:15:42','date' : '2016-01-17'}
+        returnedDict = calculatePredict(inputVal)
+        print(returnedDict)
         self.assertTrue(returnedDict == desiredOutput)

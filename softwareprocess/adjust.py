@@ -65,11 +65,13 @@ def calculatePredict(values):
     # calculation of long and lat
     starParameters = starsDict[starName]
     starParameters = starParameters.split()
-    latitude = starParameters[0]
-    SHA = starParameters[1]
+    latitude = starParameters[1]
+    SHA = starParameters[0]
     timeParameters = {'date' : values['date'], 'time' : values['time']}
     earthGHA = calculateEarthGHA(timeParameters)
-
+    long = degreeToString(degreeToFloat(earthGHA) + degreeToFloat(SHA))
+    values['long'] = long
+    values['lat'] = latitude
     for key in dict.keys(values):
         if key not in keys:
             del values[key]

@@ -16,6 +16,6 @@ import math
 # returnedDict = calculateEarthGHA(inputVal)
 # print(returnedDict)
 
-str = '-aiubfq'
-str = str.replace('bfq', '22')
-print(str)
+inputVal = {'op': 'adjust', 'body': 'Betelgeuse', 'time': '03:15:42', 'date': '2016-01-17'}
+returnedDict = calculatePredict(inputVal)
+print(returnedDict)
