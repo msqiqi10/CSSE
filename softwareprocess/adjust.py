@@ -3,59 +3,7 @@ import os
 import datetime
 
 def calculatePredict(values):
-    # checking important information
-    key = 'body'
-    if key not in values:
-        values['error'] = 'mandatory information is missing'
-        return values
-    fileName = os.path.join(os.path.dirname(__file__),'stars.txt')
-    stars = open(fileName)
-    starsDict = {}
-    for line in stars:
-        eachLine = line
-        eachLine = eachLine.split()
-        starsDict[eachLine[0]] = str(eachLine[1]) + ' ' + str(eachLine[2])
-    stars.close()
-    starName = values['body']
-    if starName not in starsDict:
-        values['error'] = 'star not in catalog'
-        return values
 
-    # validate time
-    time = values['time']
-    time = time.split(':')
-    if (int(time[0]) > 24 or int(time[0]) < 0) or (int(time[1]) > 60 or int(time[1]) < 0) or (int(time[2]) > 60 or int(time[2]) <0):
-        values['error'] = 'time value is illegal'
-        return values
-    
-    # validate date
-    value = values['date']
-    if not re.match("^\d\d\d\d-\d\d-\d\d$", value):
-        values['error'] = 'date format is illegal'
-        return values
-    value = value.split('-')
-    if int(value[0]) < 2001 or int(value[1]) > 12:
-        values['error'] = 'date value is illegal'
-        return values
-    date = int(value[2])
-    month = int(value[1])
-    year = int(value[0])
-    if month == 2 and year%4 != 0:
-        if date > 28:
-            values['error'] = 'date value is illegal'
-            return values
-    if month == 2 and year%4 == 0:
-        if date > 29:
-            values['error'] = 'date value is illegal'
-            return values
-    if month in [1,3,5,7,8,10,12]:
-        if date >31:
-            values['error'] = 'date value is illegal'
-            return values
-    if month in [4,6,9,11]:
-        if date > 30:
-            values['error'] = 'date value is illegal'
-            return values
 
     # setting default values
     keys = ['long','lat']
@@ -64,11 +12,29 @@ def calculatePredict(values):
     key = 'date'
     if key not in dict.keys(values):
         values[key] = '2001-01-01'
+    else:
+        flag = dateTest(values['date'])
+        if flag == False:
+            values['error'] = 'date value is illegal'
+            return values
     key = 'time'
     if key not in dict.keys(values):
         values[key] = '00:00:00'
 
+
     # calculation of long and lat
+    fileName = os.path.join(os.path.dirname(__file__), 'stars.txt')
+    stars = open(fileName)
+    starsDict = {}
+    for line in stars:
+        eachLine = line
+        eachLine = eachLine.split()
+        starsDict[eachLine[0]] = str(eachLine[1]) + ' ' + str(eachLine[2])
+    stars.close()
+    starName = values['body']
+    if starName not in starsDict: # do a star name check
+        values['error'] = 'star not in catalog'
+        return values
     starParameters = starsDict[starName]
     starParameters = starParameters.split()
     latitude = starParameters[1]
@@ -84,6 +50,46 @@ def calculatePredict(values):
         if key not in keys:
             del values[key]
     return values
+
+    # validate parameters
+def parameterCheck(values):
+    # checking important information
+    key = 'body'
+    if key not in values:
+        values['error'] = 'mandatory information is missing'
+        return values
+
+    # validate time
+    time = values['time']
+    time = time.split(':')
+    if (int(time[0]) > 24 or int(time[0]) < 0) or (int(time[1]) > 60 or int(time[1]) < 0) or (int(time[2]) > 60 or int(time[2]) <0):
+        values['error'] = 'time value is illegal'
+        return values
+
+
+def dateTest(value):
+    # validate date
+    if not re.match("^\d\d\d\d-\d\d-\d\d$", value):
+        return False
+    value = value.split('-')
+    if int(value[0]) < 2001 or int(value[1]) > 12:
+        return False
+    date = int(value[2])
+    month = int(value[1])
+    year = int(value[0])
+    if month == 2 and year % 4 != 0:
+        if date > 28:
+            return False
+    if month == 2 and year % 4 == 0:
+        if date > 29:
+            return False
+    if month in [1, 3, 5, 7, 8, 10, 12]:
+        if date > 31:
+            return False
+    if month in [4, 6, 9, 11]:
+        if date > 30:
+            return False
+
 
 #calculate the GHA to the date
 def calculateEarthGHA(timeParameters):

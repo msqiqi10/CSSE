@@ -244,7 +244,6 @@ class TestDispatch(TestCase):
         returnedDict = calculatePredict(inputVal)
         desiredOutput = {'op':'predict', 'body': 'Betelgeuse', 'date': '2016-99-17', 'time': '03:15:42', 'error':'date value is illegal'}
         self.assertTrue(returnedDict == desiredOutput)
-        {'op': 'predict', 'body': 'Betelgeuse', 'date': '2016-01-17', 'time': '03:15:99'}
 
     def test_calculatePredict500_005_dateHappyPath(self):
         inputVal = {'op': 'predict', 'body': 'Betelgeuse', 'date': '2016-01-17', 'time': '03:15:99'}
