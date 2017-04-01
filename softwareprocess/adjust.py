@@ -118,8 +118,8 @@ def degreeToFloat(degree):
 
 def degreeToString(degree):
     minute = str("{:.1f}".format((degree - int(degree)) * 60))
-
-
+    if '-' in minute:
+        minute = minute.replace('-', '')
     minute = minute.split('.')
     var1 = minute[0].zfill(2)
     var2 = minute[1]
