@@ -223,6 +223,6 @@ class TestDispatch(TestCase):
     def test_calculatePredict500_001_dateHappyPath(self):
         inputVal = {'op' : 'adjust', 'body' : 'Betelgeuse', 'time' : '03:15:42','date' : '2016-01-17'}
         returnedDict = calculatePredict(inputVal)
-        desiredOutput = {'body': 'Betelgeuse', 'long': '435d53.7', 'lat': '7d24.3', 'time':
+        desiredOutput = {'body': 'Betelgeuse', 'long': '75d53.7', 'lat': '7d24.3', 'time':
             '03:15:42', 'date': '2016-01-17', 'op': 'adjust'}
         self.assertTrue(returnedDict == desiredOutput)
