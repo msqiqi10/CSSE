@@ -96,7 +96,7 @@ def calculateEarthGHA(timeParameters):
     dayGap = int(diff.days)
     time = time.split(':')
     sec = dayGap * 86400 + int(time[0]) * 3600 + int(time[1]) * 60 + int(time[2])
-    rotationInYear = (sec - (sec % 86164.1) * 86164.1) * degreeToFloat('360d0')
+    rotationInYear = (sec - int(sec / 86164.1) * 86164.1) / 86164.1 * degreeToFloat('360d0')
     GHA = originalGHA + cumulativeProgress + totalProgression + rotationInYear
     GHA = degreeToString(GHA)
     return GHA
@@ -104,11 +104,16 @@ def calculateEarthGHA(timeParameters):
 def degreeToFloat(degree):
     degree = degree.split('d')
     minute = float(degree[1])
-    degree = int(degree[0])
-    if degree < 0:
-        degree = degree - minute / 60
+    if int(degree) != 0:
+        if degree < 0:
+            degree = degree - minute / 60
+        else:
+            degree = degree + minute / 60
     else:
-        degree = degree + minute / 60
+        if degree[0] == '-'
+            degree = - minute / 60
+        else:
+            degree = minute / 60
     return degree
 
 def degreeToString(degree):

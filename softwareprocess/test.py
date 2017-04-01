@@ -16,6 +16,5 @@ import math
 # returnedDict = calculateEarthGHA(inputVal)
 # print(returnedDict)
 
-sec = 1394142
-rotationInYear = (sec - int(sec/86164.1) * 86164.1) / 86164.1 * degreeToFloat('360d0')
-print(degreeToString(rotationInYear))
+a = 'sfq'
+print(a[0])

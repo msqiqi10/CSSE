@@ -212,4 +212,5 @@ class TestDispatch(TestCase):
         inputVal = {'time' : '03:15:42','date' : '2016-01-17'}
         returnedDict = calculateEarthGHA(inputVal)
         desiredOutput = '164d54.5'
+        print(returnedDict)
         self.assertTrue(returnedDict == desiredOutput)
