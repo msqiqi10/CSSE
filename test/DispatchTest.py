@@ -211,5 +211,6 @@ class TestDispatch(TestCase):
     def test_calculatePredict400_001_dateHappyPath(self):
         inputVal = {'time' : '03:15:42','date' : '2016-01-17'}
         returnedDict = calculateEarthGHA(inputVal)
+        print (returnedDict)
         desiredOutput = '164d54.4'
         self.assertTrue(returnedDict == desiredOutput)
