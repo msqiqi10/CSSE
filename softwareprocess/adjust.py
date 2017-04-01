@@ -69,7 +69,9 @@ def calculatePredict(values):
     SHA = starParameters[0]
     timeParameters = {'date' : values['date'], 'time' : values['time']}
     earthGHA = calculateEarthGHA(timeParameters)
-    long = degreeToString(degreeToFloat(earthGHA) + degreeToFloat(SHA))
+    long = degreeToFloat(earthGHA) + degreeToFloat(SHA)
+    long = long - (int(long / 360) * 360)
+    long = degreeToString(long)
     values['long'] = long
     values['lat'] = latitude
     for key in dict.keys(values):
