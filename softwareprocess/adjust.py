@@ -106,9 +106,9 @@ def degreeToFloat(degree):
     minute = float(degree[1])
     if int(degree[0]) != 0:
         if degree[0] < 0:
-            degree = degree[0] - minute / 60
+            degree = int(degree[0]) - minute / 60
         else:
-            degree = degree[0] + minute / 60
+            degree = int(degree[0]) + minute / 60
     else:
         if degree[0][0] == '-':
             degree = - minute / 60
