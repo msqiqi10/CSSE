@@ -21,6 +21,13 @@ def calculatePredict(values):
         values['error'] = 'star not in catalog'
         return values
 
+    # validate time
+    time = values['time']
+    time = time.split(':')
+    if (int(time[0]) > 24 or int(time[0]) < 0) or (int(time[1]) > 60 or int(time[1]) < 0) or (int(time[2]) > 60 or int(time[2]) <0):
+        values['error'] = 'time value is illegal'
+        return values
+    
     # validate date
     value = values['date']
     if not re.match("^\d\d\d\d-\d\d-\d\d$", value):

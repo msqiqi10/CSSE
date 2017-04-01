@@ -250,5 +250,5 @@ class TestDispatch(TestCase):
         inputVal = {'op': 'predict', 'body': 'Betelgeuse', 'date': '2016-01-17', 'time': '03:15:99'}
         returnedDict = calculatePredict(inputVal)
         print(returnedDict)
-        desiredOutput = {'op':'predict', 'body': 'Betelgeuse', 'date': '2016-99-17', 'time': '03:15:42', 'error':'time value is illegal'}
+        desiredOutput = {'op':'predict', 'body': 'Betelgeuse', 'date': '2016-17-17', 'time': '03:15:42', 'error':'time value is illegal'}
         self.assertTrue(returnedDict == desiredOutput)
