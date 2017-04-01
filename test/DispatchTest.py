@@ -1,5 +1,7 @@
 from unittest import TestCase
 from softwareprocess.dispatch import dispatch
+from softwareprocess.observation import *
+from softwareprocess.adjust import *
 
 
 class TestDispatch(TestCase):
@@ -201,3 +203,13 @@ class TestDispatch(TestCase):
         desiredOutput = {'date' : '2002-02-15', 'body' : 'Akamar', 'op' : 'predict'}
         self.assertTrue(returnedDict == desiredOutput)
 
+    # -----------------------------------------------------------------------
+    # ---- Earth GHA calculation test
+    # 400 constructor:
+    # always happy path
+
+    def test_calculatePredict400_001_dateHappyPath(self):
+        inputVal = {'time' : '03:15:42','date' : '2016-01-17'}
+        returnedDict = calculateEarthGHA(inputVal)
+        desiredOutput = '164d54.5'
+        self.assertTrue(returnedDict == desiredOutput)
