@@ -16,5 +16,6 @@ import math
 # returnedDict = calculateEarthGHA(inputVal)
 # print(returnedDict)
 
-a = degreeToFloat('0d59.0')
-print(degreeToString(a*3))
+str = '-aiubfq'
+str = str.replace('bfq', '22')
+print(str)
