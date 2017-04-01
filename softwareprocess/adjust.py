@@ -104,13 +104,13 @@ def calculateEarthGHA(timeParameters):
 def degreeToFloat(degree):
     degree = degree.split('d')
     minute = float(degree[1])
-    if int(degree) != 0:
-        if degree < 0:
-            degree = degree - minute / 60
+    if int(degree[0]) != 0:
+        if degree[0] < 0:
+            degree = degree[0] - minute / 60
         else:
-            degree = degree + minute / 60
+            degree = degree[0] + minute / 60
     else:
-        if degree[0] == '-'
+        if degree[0][0] == '-':
             degree = - minute / 60
         else:
             degree = minute / 60
