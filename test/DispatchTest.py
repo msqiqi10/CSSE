@@ -230,20 +230,17 @@ class TestDispatch(TestCase):
     def test_calculatePredict500_002_dateHappyPath(self):
         inputVal = {}
         returnedDict = calculatePredict(inputVal)
-        print(returnedDict)
         desiredOutput = {'error':'mandatory information is missing'}
         self.assertTrue(returnedDict == desiredOutput)
 
     def test_calculatePredict500_003_dateHappyPath(self):
         inputVal = {'op':'predict', 'body': 'unknown', 'date': '2016-01-17', 'time': '03:15:42'}
         returnedDict = calculatePredict(inputVal)
-        print(returnedDict)
         desiredOutput = {'op':'predict', 'body': 'unknown', 'date': '2016-01-17', 'time': '03:15:42', 'error':'star not in catalog'}
         self.assertTrue(returnedDict == desiredOutput)
 
     def test_calculatePredict500_004_dateHappyPath(self):
         inputVal = {'op': 'predict', 'body': 'Betelgeuse', 'date': '2016-99-17', 'time': '03:15:42'}
         returnedDict = calculatePredict(inputVal)
-        print(returnedDict)
-        desiredOutput = {'op':'predict', 'body': 'Betelgeuse', 'date': '2016-99-17', 'time': '03:15:42', 'error':'invalid date'}
+        desiredOutput = {'op':'predict', 'body': 'Betelgeuse', 'date': '2016-99-17', 'time': '03:15:42', 'error':'date value is illegal'}
         self.assertTrue(returnedDict == desiredOutput)
