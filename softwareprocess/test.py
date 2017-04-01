@@ -16,6 +16,5 @@ import math
 # returnedDict = calculateEarthGHA(inputVal)
 # print(returnedDict)
 
-a = degreeToFloat('-0d14.31667')
-print(a)
-print(14.31666/60)
+a = degreeToFloat('0d59.0')
+print(degreeToString(a*3))
