@@ -3,7 +3,26 @@ import os
 import datetime
 
 def calculatePredict(values):
+    # checking important information
+    key = 'body'
+    if key not in values:
+        values['error'] = 'mandatory information is missing'
+        return values
 
+
+    # calculation of long and lat
+    fileName = os.path.join(os.path.dirname(__file__), 'stars.txt')
+    stars = open(fileName)
+    starsDict = {}
+    for line in stars:
+        eachLine = line
+        eachLine = eachLine.split()
+        starsDict[eachLine[0]] = str(eachLine[1]) + ' ' + str(eachLine[2])
+    stars.close()
+    starName = values['body']
+    if starName not in starsDict: # do a star name check
+        values['error'] = 'star not in catalog'
+        return values
 
     # setting default values
     keys = ['long','lat']
@@ -26,19 +45,7 @@ def calculatePredict(values):
             values['error'] = 'time value is illegal'
             return values
 
-    # calculation of long and lat
-    fileName = os.path.join(os.path.dirname(__file__), 'stars.txt')
-    stars = open(fileName)
-    starsDict = {}
-    for line in stars:
-        eachLine = line
-        eachLine = eachLine.split()
-        starsDict[eachLine[0]] = str(eachLine[1]) + ' ' + str(eachLine[2])
-    stars.close()
-    starName = values['body']
-    if starName not in starsDict: # do a star name check
-        values['error'] = 'star not in catalog'
-        return values
+
     starParameters = starsDict[starName]
     starParameters = starParameters.split()
     latitude = starParameters[1]
@@ -54,14 +61,6 @@ def calculatePredict(values):
         if key not in keys:
             del values[key]
     return values
-
-    # validate parameters
-def parameterCheck(values):
-    # checking important information
-    key = 'body'
-    if key not in values:
-        values['error'] = 'mandatory information is missing'
-        return values
 
 def timeTest(values):
     # validate time
