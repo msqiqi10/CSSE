@@ -77,15 +77,22 @@ def calculateAltitude(values):
 def degreeToFloat(degree):
     degree = degree.split('d')
     minute = float(degree[1])
-    degree = int(degree[0])
-    if degree < 0:
-        degree = degree - minute / 60
+    if int(degree[0]) != 0:
+        if degree[0] < 0:
+            degree = int(degree[0]) - minute / 60
+        else:
+            degree = int(degree[0]) + minute / 60
     else:
-        degree = degree + minute / 60
+        if degree[0][0] == '-':
+            degree = - minute / 60
+        else:
+            degree = minute / 60
     return degree
 
 def degreeToString(degree):
     minute = str("{:.1f}".format((degree - int(degree)) * 60))
+    if '-' in minute:
+        minute = minute.replace('-', '')
     minute = minute.split('.')
     var1 = minute[0].zfill(2)
     var2 = minute[1]
