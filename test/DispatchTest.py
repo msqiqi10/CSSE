@@ -227,27 +227,26 @@ class TestDispatch(TestCase):
             '03:15:42', 'date': '2016-01-17', 'op': 'adjust'}
         self.assertTrue(returnedDict == desiredOutput)
 
-    def test_calculatePredict500_002_dateHappyPath(self):
+    def test_calculatePredict500_002_missingOperator(self):
         inputVal = {}
         returnedDict = calculatePredict(inputVal)
         desiredOutput = {'error':'mandatory information is missing'}
         self.assertTrue(returnedDict == desiredOutput)
 
-    def test_calculatePredict500_003_dateHappyPath(self):
+    def test_calculatePredict500_003_bodyValueIllegal(self):
         inputVal = {'op':'predict', 'body': 'unknown', 'date': '2016-01-17', 'time': '03:15:42'}
         returnedDict = calculatePredict(inputVal)
         desiredOutput = {'op':'predict', 'body': 'unknown', 'date': '2016-01-17', 'time': '03:15:42', 'error':'star not in catalog'}
         self.assertTrue(returnedDict == desiredOutput)
 
-    def test_calculatePredict500_004_dateHappyPath(self):
+    def test_calculatePredict500_004_dateValueIllegal(self):
         inputVal = {'op': 'predict', 'body': 'Betelgeuse', 'date': '2016-99-17', 'time': '03:15:42'}
         returnedDict = calculatePredict(inputVal)
         desiredOutput = {'op':'predict', 'body': 'Betelgeuse', 'date': '2016-99-17', 'time': '03:15:42', 'error':'date value is illegal'}
         self.assertTrue(returnedDict == desiredOutput)
 
-    def test_calculatePredict500_005_dateHappyPath(self):
+    def test_calculatePredict500_005_timeValueIllegal(self):
         inputVal = {'op': 'predict', 'body': 'Betelgeuse', 'date': '2016-01-17', 'time': '03:15:99'}
         returnedDict = calculatePredict(inputVal)
-        print(returnedDict)
         desiredOutput = {'op':'predict', 'body': 'Betelgeuse', 'date': '2016-01-17', 'time': '03:15:99', 'error':'time value is illegal'}
         self.assertTrue(returnedDict == desiredOutput)
