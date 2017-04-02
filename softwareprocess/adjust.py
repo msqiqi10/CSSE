@@ -51,7 +51,7 @@ def calculatePredict(values):
     latitude = starParameters[1]
     SHA = starParameters[0]
     timeParameters = {'date' : values['date'], 'time' : values['time']}
-    earthGHA = calculateEarthGHA(timeParameters)
+    earthGHA = calculateGHA(timeParameters)
     long = degreeToFloat(earthGHA) + degreeToFloat(SHA)
     long = long - (int(long / 360) * 360)
     long = degreeToString(long)
@@ -97,7 +97,7 @@ def dateTest(value):
 
 
 #calculate the GHA to the date
-def calculateEarthGHA(timeParameters):
+def calculateGHA(timeParameters):
     originalGHA = '100d42.6'
     originalGHA = degreeToFloat(originalGHA)
     date = timeParameters['date']
