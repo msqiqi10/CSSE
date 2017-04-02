@@ -40,7 +40,7 @@ def calculatePredict(values):
     if key not in dict.keys(values):
         values[key] = '00:00:00'
     else:
-        flag = timeTest(values['time'])
+        flag = timeTest(values)
         if flag == False:
             values['error'] = 'time value is illegal'
             return values
