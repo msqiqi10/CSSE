@@ -16,6 +16,6 @@ import math
 # returnedDict = calculateEarthGHA(inputVal)
 # print(returnedDict)
 
-inputVal = {'op': 'predict', 'body' : 'lalala'}
+inputVal = {'op': 'predict', 'body' : 'Akamar', 'date' : 'randomString'}
 returnedDict = dispatch.dispatch(inputVal)
 print(returnedDict)
