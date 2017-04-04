@@ -6,7 +6,7 @@ def calculatePredict(values):
     # checking important information
     key = 'body'
     if key not in values:
-        values['error'] = 'mandatory information is missing'
+        values['error'] = 'mandatory information body missing'
         return values
 
 

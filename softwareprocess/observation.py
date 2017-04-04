@@ -4,7 +4,7 @@ import re
 def calculateAltitude(values):
     key = 'observation'
     if key not in dict.keys(values):
-        return {'error': 'mandatory information missing'}
+        return {'error': 'mandatory information observation missing'}
     for key in dict.keys(values):
         if key == 'altitude':
             return {'error': 'altitude has already been in parameter'}
