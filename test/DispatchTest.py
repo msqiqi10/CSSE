@@ -1,6 +1,5 @@
 from unittest import TestCase
 from softwareprocess.dispatch import dispatch
-from softwareprocess.observation import *
 from softwareprocess.adjust import *
 
 
@@ -25,7 +24,7 @@ class TestDispatch(TestCase):
     def test_dispatch100_001_observationMissing(self):
         inputVal = {'op': 'adjust'}
         returnedValue = dispatch(inputVal)
-        self.assertTrue(returnedValue == {'error': 'mandatory information missing'})
+        self.assertTrue(returnedValue == {'error': 'mandatory information observation missing'})
 
     def test_dispatch100_002_observationValueIllegal(self):
         inputVal = {'op': 'adjust', 'observation': '123321'}
@@ -152,7 +151,7 @@ class TestDispatch(TestCase):
     def test_calculatePredict300_002_missingBody(self):
         inputVal = {'op': 'predict'}
         returnedDict = dispatch(inputVal)
-        desiredOutput = {'error':'mandatory information is missing', 'op': 'predict'}
+        desiredOutput = {'error':'mandatory information body missing', 'op': 'predict'}
         self.assertTrue(returnedDict == desiredOutput)
 
     def test_calculatePredict300_003_bodyNotInTable(self):
@@ -220,33 +219,66 @@ class TestDispatch(TestCase):
     # 500 constructor:
     # Given cases
 
-    def test_calculatePredict500_001_dateHappyPath(self):
-        inputVal = {'op' : 'adjust', 'body' : 'Betelgeuse', 'time' : '03:15:42','date' : '2016-01-17'}
-        returnedDict = calculatePredict(inputVal)
+    def test_calculatePredict500_001_HappyPath(self):
+        inputVal = {'op' : 'predict', 'body' : 'Betelgeuse', 'time' : '03:15:42','date' : '2016-01-17'}
+        returnedDict = dispatch(inputVal)
         desiredOutput = {'body': 'Betelgeuse', 'long': '75d53.7', 'lat': '7d24.3', 'time':
-            '03:15:42', 'date': '2016-01-17', 'op': 'adjust'}
+            '03:15:42', 'date': '2016-01-17', 'op': 'predict'}
         self.assertTrue(returnedDict == desiredOutput)
 
-    def test_calculatePredict500_002_missingOperator(self):
+    def test_calculatePredict500_002_HappyPath(self):
         inputVal = {}
-        returnedDict = calculatePredict(inputVal)
-        desiredOutput = {'error':'mandatory information is missing'}
+        returnedDict = dispatch(inputVal)
+        desiredOutput = {'error':'no op is specified'}
         self.assertTrue(returnedDict == desiredOutput)
 
-    def test_calculatePredict500_003_bodyValueIllegal(self):
+    def test_calculatePredict500_003_HappyPath(self):
         inputVal = {'op':'predict', 'body': 'unknown', 'date': '2016-01-17', 'time': '03:15:42'}
-        returnedDict = calculatePredict(inputVal)
+        returnedDict = dispatch(inputVal)
         desiredOutput = {'op':'predict', 'body': 'unknown', 'date': '2016-01-17', 'time': '03:15:42', 'error':'star not in catalog'}
         self.assertTrue(returnedDict == desiredOutput)
 
-    def test_calculatePredict500_004_dateValueIllegal(self):
+    def test_calculatePredict500_004_HappyPath(self):
         inputVal = {'op': 'predict', 'body': 'Betelgeuse', 'date': '2016-99-17', 'time': '03:15:42'}
-        returnedDict = calculatePredict(inputVal)
+        returnedDict = dispatch(inputVal)
         desiredOutput = {'op':'predict', 'body': 'Betelgeuse', 'date': '2016-99-17', 'time': '03:15:42', 'error':'date value is illegal'}
         self.assertTrue(returnedDict == desiredOutput)
 
-    def test_calculatePredict500_005_timeValueIllegal(self):
+    def test_calculatePredict500_005_HappyPath(self):
         inputVal = {'op': 'predict', 'body': 'Betelgeuse', 'date': '2016-01-17', 'time': '03:15:99'}
-        returnedDict = calculatePredict(inputVal)
+        returnedDict = dispatch(inputVal)
         desiredOutput = {'op':'predict', 'body': 'Betelgeuse', 'date': '2016-01-17', 'time': '03:15:99', 'error':'time value is illegal'}
+        self.assertTrue(returnedDict == desiredOutput)
+
+    def test_calculatePredict500_006_HappyPath(self):
+        inputVal = {'op': 'correct'}
+        returnedDict = dispatch(inputVal)
+        desiredOutput = {'op':'correct'}
+        self.assertTrue(returnedDict == desiredOutput)
+
+    def test_calculatePredict500_007_HappyPath(self):
+        inputVal = {'op': 'locate'}
+        returnedDict = dispatch(inputVal)
+        desiredOutput = {'op':'locate'}
+        self.assertTrue(returnedDict == desiredOutput)
+
+    def test_calculatePredict500_008_opIllegal(self):
+        inputVal = {'op': 'lalala'}
+        returnedDict = dispatch(inputVal)
+        print(returnedDict)
+        desiredOutput = {'op': 'lalala', 'error': 'op is not a legal operation'}
+        self.assertTrue(returnedDict == desiredOutput)
+
+    def test_calculatePredict500_009_longContainedInInput(self):
+        inputVal = {'op': 'predict', 'body': 'Betelgeuse', 'date': '2016-01-17', 'time': '03:15:15', 'long': 'whatever'}
+        returnedDict = dispatch(inputVal)
+        print(returnedDict)
+        desiredOutput = {'op': 'predict', 'body': 'Betelgeuse', 'date': '2016-01-17', 'time': '03:15:15', 'long': 'whatever', 'error': 'input contains key long'}
+        self.assertTrue(returnedDict == desiredOutput)
+
+    def test_calculatePredict500_009_latContainedInInput(self):
+        inputVal = {'op': 'predict', 'body': 'Betelgeuse', 'date': '2016-01-17', 'time': '03:15:15', 'lat': 'whatever'}
+        returnedDict = dispatch(inputVal)
+        print(returnedDict)
+        desiredOutput = {'op': 'predict', 'body': 'Betelgeuse', 'date': '2016-01-17', 'time': '03:15:15', 'lat': 'whatever', 'error': 'input contains key lat'}
         self.assertTrue(returnedDict == desiredOutput)

@@ -5,12 +5,19 @@ import datetime
 def calculatePredict(values):
     # checking important information
     key = 'body'
-    if key not in values:
+    if key not in dict.keys(values):
         values['error'] = 'mandatory information body missing'
+        return values
+    key = 'long'
+    if key in dict.keys(values):
+        values['error'] = 'input contains key long'
+        return values
+    key = 'lat'
+    if key in dict.keys(values):
+        values['error'] = 'input contains key lat'
         return values
 
 
-    # calculation of long and lat
     fileName = os.path.join(os.path.dirname(__file__), 'stars.txt')
     stars = open(fileName)
     starsDict = {}
