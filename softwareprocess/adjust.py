@@ -8,13 +8,11 @@ def calculatePredict(values):
     if key not in dict.keys(values):
         values['error'] = 'mandatory information body missing'
         return values
-    key = 'long'
-    if key in dict.keys(values):
-        values['error'] = 'input contains key long'
-        return values
-    key = 'lat'
-    if key in dict.keys(values):
-        values['error'] = 'input contains key lat'
+    key1 = 'long'
+
+    key2 = 'lat'
+    if (key1 in dict.keys(values)) or (key2 in dict.keys(values)):
+        values['error'] = 'input contains key lat or long'
         return values
 
 

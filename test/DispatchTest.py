@@ -273,12 +273,12 @@ class TestDispatch(TestCase):
         inputVal = {'op': 'predict', 'body': 'Betelgeuse', 'date': '2016-01-17', 'time': '03:15:15', 'long': 'whatever'}
         returnedDict = dispatch(inputVal)
         print(returnedDict)
-        desiredOutput = {'op': 'predict', 'body': 'Betelgeuse', 'date': '2016-01-17', 'time': '03:15:15', 'long': 'whatever', 'error': 'input contains key long'}
+        desiredOutput = {'op': 'predict', 'body': 'Betelgeuse', 'date': '2016-01-17', 'time': '03:15:15', 'long': 'whatever', 'error': 'input contains key lat or long'}
         self.assertTrue(returnedDict == desiredOutput)
 
     def test_calculatePredict500_009_latContainedInInput(self):
         inputVal = {'op': 'predict', 'body': 'Betelgeuse', 'date': '2016-01-17', 'time': '03:15:15', 'lat': 'whatever'}
         returnedDict = dispatch(inputVal)
         print(returnedDict)
-        desiredOutput = {'op': 'predict', 'body': 'Betelgeuse', 'date': '2016-01-17', 'time': '03:15:15', 'lat': 'whatever', 'error': 'input contains key lat'}
+        desiredOutput = {'op': 'predict', 'body': 'Betelgeuse', 'date': '2016-01-17', 'time': '03:15:15', 'lat': 'whatever', 'error': 'input contains key lat or long'}
         self.assertTrue(returnedDict == desiredOutput)
