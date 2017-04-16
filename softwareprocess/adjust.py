@@ -45,7 +45,7 @@ def calculatePredict(values):
     if key not in dict.keys(values):
         values[key] = '00:00:00'
     else:
-        flag = timeTest(values)
+        flag = timeTest(values['time'])
         if flag == False:
             values['error'] = 'time value is illegal'
             return values
@@ -67,21 +67,24 @@ def calculatePredict(values):
             del values[key]
     return values
 
-def timeTest(values):
+def timeTest(val):
     # validate time
-    time = values['time']
-    if not re.match("^\d\d:\d\d:\d\d", time):
+    if not isinstance(val,str):
         return False
-    time = time.split(':')
+    if not re.match("^\d\d:\d\d:\d\d", val):
+        return False
+    time = val.split(':')
     if (int(time[0]) > 24 or int(time[0]) < 0) or (int(time[1]) > 60 or int(time[1]) < 0) or (int(time[2]) > 60 or int(time[2]) <0):
         return False
 
 
-def dateTest(value):
+def dateTest(val):
     # validate date
-    if not re.match("^\d\d\d\d-\d\d-\d\d$", value):
+    if not isinstance(val,str):
         return False
-    value = value.split('-')
+    if not re.match("^\d\d\d\d-\d\d-\d\d$", val):
+        return False
+    value = val.split('-')
     if int(value[0]) < 2001 or int(value[1]) > 12:
         return False
     date = int(value[2])
