@@ -34,8 +34,8 @@ def calculateCorrect(values):
                                                      * cos(alternatives['assumedLat']) * cos(radians(LHA)))
     correctedAltitude = asin(intermediateDistance)
     correctedDistance = (alternatives['altitude'] - correctedAltitude)
-    var1 = (sin(radians(degreeToFloat(values['lat']))) - (sin(radians(degreeToFloat(values['assumedLat']))) * intermediateDistance))
-    var2 = cos(radians(degreeToFloat(values['assumedLat']))) * cos(asin(intermediateDistance))
+    var1 = (sin(alternatives['lat']) - (sin(alternatives['assumedLat']) * intermediateDistance))
+    var2 = cos(alternatives['assumedLat']) * cos(asin(intermediateDistance))
     correctedAzimuth = (acos(var1 / var2)) * 180 / pi
     correctedDistance = int(correctedDistance * 180 / pi * 60)
     values['correctedDistance'] = str(correctedDistance)
@@ -52,7 +52,7 @@ def numericCheck(name,value):
     List = value.split('d')
     degree = int(List[0])
     minute = float(List[1])
-    if not ((degree < param[1] and degree > param[0]) and (minute > 0 and minute < 60)):
+    if not (param[0] < degree < param[1]) and (0 < minute  < 60):
         return False
     return True
 
