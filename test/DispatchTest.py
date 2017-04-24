@@ -1,6 +1,8 @@
 from unittest import TestCase
+from math import *
 from softwareprocess.dispatch import dispatch
-from softwareprocess.adjust import *
+from softwareprocess.OPpredict import *
+from softwareprocess.OPcorrect import *
 
 
 class TestDispatch(TestCase):
@@ -250,11 +252,11 @@ class TestDispatch(TestCase):
         desiredOutput = {'op':'predict', 'body': 'Betelgeuse', 'date': '2016-01-17', 'time': '03:15:99', 'error':'time value is illegal'}
         self.assertTrue(returnedDict == desiredOutput)
 
-    def test_calculatePredict500_006_HappyPath(self):
-        inputVal = {'op': 'correct'}
-        returnedDict = dispatch(inputVal)
-        desiredOutput = {'op':'correct'}
-        self.assertTrue(returnedDict == desiredOutput)
+    # def test_calculatePredict500_006_HappyPath(self):
+    #     inputVal = {'op': 'correct'}
+    #     returnedDict = dispatch(inputVal)
+    #     desiredOutput = {'op':'correct'}
+    #     self.assertTrue(returnedDict == desiredOutput)
 
     def test_calculatePredict500_007_HappyPath(self):
         inputVal = {'op': 'locate'}
@@ -265,20 +267,96 @@ class TestDispatch(TestCase):
     def test_calculatePredict500_008_opIllegal(self):
         inputVal = {'op': 'lalala'}
         returnedDict = dispatch(inputVal)
-        print(returnedDict)
         desiredOutput = {'op': 'lalala', 'error': 'op is not a legal operation'}
         self.assertTrue(returnedDict == desiredOutput)
 
     def test_calculatePredict500_009_longContainedInInput(self):
         inputVal = {'op': 'predict', 'body': 'Betelgeuse', 'date': '2016-01-17', 'time': '03:15:15', 'long': 'whatever'}
         returnedDict = dispatch(inputVal)
-        print(returnedDict)
         desiredOutput = {'op': 'predict', 'body': 'Betelgeuse', 'date': '2016-01-17', 'time': '03:15:15', 'long': 'whatever', 'error': 'input contains key lat or long'}
         self.assertTrue(returnedDict == desiredOutput)
 
     def test_calculatePredict500_009_latContainedInInput(self):
         inputVal = {'op': 'predict', 'body': 'Betelgeuse', 'date': '2016-01-17', 'time': '03:15:15', 'lat': 'whatever'}
         returnedDict = dispatch(inputVal)
-        print(returnedDict)
         desiredOutput = {'op': 'predict', 'body': 'Betelgeuse', 'date': '2016-01-17', 'time': '03:15:15', 'lat': 'whatever', 'error': 'input contains key lat or long'}
         self.assertTrue(returnedDict == desiredOutput)
+
+
+    # -----------------------------------------------------------------------
+    # ---- function to validate input parameter of correct test
+    # 600 constructor:
+    # not a str, string not in 'xdyy.y' format, and happypath test
+
+    def test_inputStrCheck600_001_inputNoString(self):
+        inputVal = 24
+        output = inputStrCheck(inputVal)
+        self.assertTrue(output == False)
+
+    def test_inputStrCheck600_002_IllegalInputFormat(self):
+        inputVal = '87.3'
+        output = inputStrCheck(inputVal)
+        self.assertTrue(output == False)
+
+    def test_inputCheck600_00_HappyPath(self):
+        inputVal = '43d43.6'
+        output = inputStrCheck(inputVal)
+        self.assertTrue(output == True)
+
+    # -----------------------------------------------------------------------
+    # ---- correct function test
+    # 700 constructor:
+    # Mandatory information missing,
+
+    def test_calculateCorrect700_001_latmissing(self):
+        inputVal = {'op': 'correct'}
+        returnedDict = dispatch(inputVal)
+        desiredOutput = {'error':'Mandatory information missing', 'op': 'correct'}
+        self.assertTrue(returnedDict == desiredOutput)
+
+    def test_calculateCorrect700_002_informationMissing(self):
+        inputVal = {'op':'correct', 'long':'95d41.6', 'altitude':'13d42.3',  'assumedLat':'-53d38.4',
+                    'assumedLong':' 74d35.3'}
+        returnedDict = dispatch(inputVal)
+        desiredOutput = {'op':'correct', 'long':'95d41.6', 'altitude':'13d42.3',
+                         'assumedLat':'-53d38.4', 'assumedLong':' 74d35.3', 'error':'Mandatory information missing'}
+        self.assertTrue(returnedDict == desiredOutput)
+
+    def test_calculateCorrect700_003_IllegalLat(self):
+        inputVal = {'op':'correct', 'lat':'16.0d32.3', 'long':'95d41.6', 'altitude':'13d42.3',
+                    'assumedLat':'-53d38.4', 'assumedLong':' 74d35.3'}
+        returnedDict = dispatch(inputVal)
+        desiredOutput = {'op':'correct', 'lat':'16.0d32.3', 'long':'95d41.6', 'altitude':'13d42.3',
+                         'assumedLat':'-53d38.4', 'assumedLong':' 74d35.3', 'error':'invalid lat'}
+        self.assertTrue(returnedDict == desiredOutput)
+
+    def test_calculateCorrect700_004_IllegalAssumedLat(self):
+        inputVal = {'op':'correct', 'lat':'16d32.3', 'long':'95d41.6', 'altitude':'13d42.3',
+                    'assumedLat':'-153d38.4', 'assumedLong':' 74d35.3'}
+        returnedDict = dispatch(inputVal)
+        desiredOutput = {'op':'correct', 'lat':'16d32.3', 'long':'95d41.6', 'altitude':'13d42.3',
+                         'assumedLat':'-153d38.4', 'assumedLong':' 74d35.3', 'error':'invalid assumedLat'}
+        self.assertTrue(returnedDict == desiredOutput)
+
+    # -----------------------------------------------------------------------
+    # ---- correct function test
+    # 800 constructor:
+    # Given cases, always happy path test
+
+    def test_calculateCorrect800_001_happyPathTest(self):
+        inputVal = {'op':'correct', 'lat':'89d20.1', 'long':'154d5.4', 'altitude':'37d17.4',
+                    'assumedLat':'35d59.7', 'assumedLong':'74d35.3'}
+        returnedDict = dispatch(inputVal)
+        desiredOupt = {'assumedLat': '35d59.7', 'correctedDistance': '104', 'altitude': '37d17.4',
+                       'assumedLong': '74d35.3', 'long': '154d5.4', 'correctedAzimuth': '0d36.8', 'lat': '89d20.1',
+                       'op': 'correct'}
+        self.assertTrue(returnedDict == desiredOupt)
+
+    def test_calculateCorrect800_002_happyPathTest(self):
+        inputVal = {'op':'correct', 'lat':'16d32.3', 'long':'95d41.6', 'altitude':'13d42.3',  'assumedLat':'-53d38.4',
+                    'assumedLong':'74d35.3'}
+        returnedDict = dispatch(inputVal)
+        print (returnedDict)
+        desiredOupt = {'op':'correct', 'lat':'16d32.3', 'long':'95d41.6', 'altitude':'13d42.3',  'assumedLat':'-53d38.4',
+                       'assumedLong':'74d35.3', 'correctedDistance':'3950', 'correctedAzimuth':'164d42.9'}
+        self.assertTrue(returnedDict == desiredOupt)

@@ -1,5 +1,6 @@
-from softwareprocess.observation import calculateAltitude
-from softwareprocess.adjust import calculatePredict
+from softwareprocess.OPadjust import calculateAltitude
+from softwareprocess.OPpredict import calculatePredict
+from softwareprocess.OPcorrect import calculateCorrect
 
 def dispatch(values=None):
 
@@ -20,9 +21,10 @@ def dispatch(values=None):
         values = calculatePredict(values)
         return values
     elif(values['op'] == 'correct'):
-        return values    #This calculation is stubbed out
+        values = calculateCorrect(values)
+        return values    # This calculation is stubbed out
     elif(values['op'] == 'locate'):
-        return values    #This calculation is stubbed out
+        return values    # This calculation is stubbed out
     else:
         values['error'] = 'op is not a legal operation'
         return values
