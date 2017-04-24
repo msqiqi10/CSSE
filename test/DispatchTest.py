@@ -283,25 +283,7 @@ class TestDispatch(TestCase):
         self.assertTrue(returnedDict == desiredOutput)
 
 
-    # -----------------------------------------------------------------------
-    # ---- function to validate input parameter of correct test
-    # 600 constructor:
-    # not a str, string not in 'xdyy.y' format, and happypath test
 
-    def test_inputStrCheck600_001_inputNoString(self):
-        inputVal = 24
-        output = inputStrCheck(inputVal)
-        self.assertTrue(output == False)
-
-    def test_inputStrCheck600_002_IllegalInputFormat(self):
-        inputVal = '87.3'
-        output = inputStrCheck(inputVal)
-        self.assertTrue(output == False)
-
-    def test_inputCheck600_00_HappyPath(self):
-        inputVal = '43d43.6'
-        output = inputStrCheck(inputVal)
-        self.assertTrue(output == True)
 
     # -----------------------------------------------------------------------
     # ---- correct function test

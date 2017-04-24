@@ -57,13 +57,6 @@ def numericCheck(name,value):
         return False
     return True
 
-
-def inputStrCheck(inputStr):
-    if not isinstance(inputStr,str):
-        return False
-    if not re.match("^\d*d\d*\.\d*$", inputStr):
-        return False
-    return True
 def degreeToFloat(degree):
     degree = degree.split('d')
     minute = float(degree[1])
