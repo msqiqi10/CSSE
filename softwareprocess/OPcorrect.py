@@ -18,7 +18,6 @@ def calculateCorrect(values):
                 values['error'] = 'invalid ' + key
                 return values
             value = '-' + value
-
         else:
             if not re.match("^\d*d\d*\.\d*$", value):
                 values['error'] = 'invalid ' + key
