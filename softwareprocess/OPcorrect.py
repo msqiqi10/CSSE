@@ -42,17 +42,23 @@ def calculateCorrect(values):
     values['correctedAzimuth'] = degreeToString(correctedAzimuth)
     return values
 
-def numericCheck(name,value):
-    if name == 'long' or name == 'assumedLong':
-        param = [0,360]
+def numericCheck(name, value):
     if name == 'lat' or name == 'assumedLat':
-        param = [-90,90]
+        param = [-90, 90]
     if name == 'altitude':
-        param = [0,90]
+        param = [0, 90]
+    if name == 'long' or name == 'assumedLong':
+        List = value.split('d')
+        degree = int(List[0])
+        minute = float(List[1])
+        if not (0 <= degree < 360) and (0 <= minute < 60):
+            return False
+        else:
+            return True
     List = value.split('d')
     degree = int(List[0])
     minute = float(List[1])
-    if not (param[0] < degree < param[1]) and (0 < minute  < 60):
+    if not (param[0] < degree < param[1]) and (0 <= minute < 60):
         return False
     return True
 
